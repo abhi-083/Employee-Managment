@@ -146,7 +146,7 @@ namespace EmployeeDB::Model {
             return performanceMetric;
         }
 
-        void setPerformanceMetric(float metric) {
+        void setPerformanceMetric(double metric) {
             performanceMetric = metric;
         }
 

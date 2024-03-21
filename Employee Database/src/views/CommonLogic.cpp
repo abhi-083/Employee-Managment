@@ -2,6 +2,69 @@
 #include"../../include/views/ViewEngineer.h"
 #include "../../include/Validator.h"
 
+std::string trim(std::string str, const std::string chars = "\t\n\v\f\r ") {
+	if (str.size() == 0) {
+		return str;
+	}
+	else {
+		std::string tmp(str);
+		tmp.erase(tmp.find_last_not_of(chars) + 1);
+		tmp.erase(0, tmp.find_first_not_of(chars));
+
+		std::string out_str;
+		bool pre_space = false;
+		int i = 0;
+		while (i < tmp.size()) {
+			if (tmp.at(i) != ' ') {
+				if (pre_space) {
+					out_str += ' ';
+				}
+				out_str += tmp.at(i);
+				pre_space = false;
+			}
+			else {
+				pre_space = true;
+			}
+			++i;
+		}
+		return out_str;
+	}
+}
+
+bool repeatOperation(const std::string& operation)
+{
+	while (true) {
+		char in;
+		std::cout << "Do you want to " + operation + " another field?(0/1): ";
+		in = std::cin.get();
+
+		if (in == '\n') {
+			std::cout << "Please enter valid input...\n";
+		}
+		else if (std::cin.peek() != '\n') {
+			in = ' ';  // Validator will return false
+
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Please enter valid input...\n";
+		}
+		else if (EmployeeDB::Validator::validateCharInput(in)) {
+			if (in == '1') {
+				return true;
+			}
+			else {
+				std::cin.clear();
+				std::cin.ignore();
+				return false;
+			}
+		}
+		else {
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cout << "Please enter valid input...\n";
+		}
+	}
+}
 void printEmpFields() {
 	std::cout << "1. firstName*: " << '\n';
 	std::cout << "2. middleName: " << '\n';
@@ -41,45 +104,41 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 	std::cin.ignore();
 	while (true) {
 		std::cout << "firstName*: ";
-		char a = std::cin.get();
-		if (a == '\n') {
-			std::cout << "First Name is mandatory...Please enter again!!" << '\n';
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "firstName is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
-
 			e.setFirstName(inputField);
 			break;
 		}
 	}
 
-	{
+	while (true) {
 		std::cout << "middleName: ";
-		char a = std::cin.get();
-
-		if (a == '\n') {}
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			break;
+		}
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "Please enter some valid input...\n";
+		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
 			e.setMiddleName(inputField);
+			break;
 		}
 	}
 
 	while (true) {
 		std::cout << "lastName*: ";
-		char a = std::cin.get();
-
-		if (a == '\n') {
-			std::cout << "Last Name is mandatory...Please enter again!!" << '\n';
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "lastName is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
-
 			e.setLastName(inputField);
 			break;
 		}
@@ -88,34 +147,30 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "dateOfBirth(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy): ";
-		char a = std::cin.get();
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			break;
+		}
+		inputField = trim(inputField);
 
-		if (a == '\n') { break; }
-		else
-		{
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
-			if (EmployeeDB::Validator::validateDate(inputField)) {
-				e.setDateOfBirth(inputField);
-				break;
-			}
-			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
-			}
+		if (EmployeeDB::Validator::validateDate(inputField)) {
+			e.setDateOfBirth(inputField);
+			break;
+		}
+		else {
+			std::cerr << "Wrong input...Please enter again!!\n";
 		}
 	}
 
 	while (true) {
 		std::cout << "mobileNo*(Starting from 6-9): ";
-		char a = std::cin.get();
-		if (a == '\n') {
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
 			std::cout << "mobileNo is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
+			inputField = trim(inputField);
+
 			if (EmployeeDB::Validator::validateMobile(inputField)) {
 				e.setMobileNo(std::stoll(inputField));
 				break;
@@ -128,14 +183,12 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "email*: ";
-		char a = std::cin.get();
-		if (a == '\n') {
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
 			std::cout << "email is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
+			inputField = trim(inputField);
 			if (EmployeeDB::Validator::validateEmail(inputField)) {
 				e.setEmail(inputField);
 				break;
@@ -148,15 +201,12 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "address*: ";
-		char a = std::cin.get();
-		if (a == '\n') {
-			std::cout << "Address is mandatory...Please enter again!!" << '\n';
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "address is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
-
 			e.setAddress(inputField);
 			break;
 		}
@@ -164,15 +214,12 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "gender*: ";
-		char a = std::cin.get();
-		if (a == '\n') {
-			std::cout << "Gender is mandatory...Please enter again!!" << '\n';
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			std::cout << "gender is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
-
+			inputField = trim(inputField);
 			int x = EmployeeDB::Validator::validateGender(inputField);
 			if (x == 1) {
 				e.setGender(EmployeeDB::Model::Gender::Male);
@@ -194,16 +241,13 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "dateOfJoining*(dd-mm-yyyy or dd/mm/yyyy or dd.mm.yyyy): ";
-		char a = std::cin.get();
-
-		if (a == '\n') {
-			std::cout << "DOJ is mandatory...Please enter again!!" << '\n';
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			std::cout << "dateOfJoining is mandatory...Please enter again!!" << '\n';
 		}
-		else
-		{
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
+		else {
+			inputField = trim(inputField);
+
 			if (EmployeeDB::Validator::validateDate(inputField)) {
 				e.setDateOfJoining(inputField);
 				break;
@@ -212,19 +256,16 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 				std::cerr << "Wrong input...Please enter again!!\n";
 			}
 		}
-
 	}
 
 	while (true) {
 		std::cout << "mentorID*: ";
-		char a = std::cin.get();
-		if (a == '\n') {
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
 			std::cout << "mentorID is mandatory...Please enter again!!" << '\n';
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
 			try {
 				e.setMentorID(std::stoi(inputField));
 			}
@@ -238,12 +279,15 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "performanceMetric: ";
-		char a = std::cin.get();
-		if (a == '\n') { break; }
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			break;
+		}
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "Wrong input...Please enter integer!!\n";
+		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
 			try {
 				e.setPerformanceMetric(std::stod(inputField));
 			}
@@ -257,12 +301,15 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 
 	while (true) {
 		std::cout << "bonus: ";
-		char a = std::cin.get();
-		if (a == '\n') { break; }
+		std::getline(std::cin, inputField);
+		if (inputField.size() == 0) {
+			break;
+		}
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "Wrong input...Please enter integer!!\n";
+		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			inputField = a + ans;
 			try {
 				e.setBonus(std::stoi(inputField));
 			}
@@ -277,21 +324,19 @@ void askUserInput(EmployeeDB::Model::Employee& e) {
 }
 
 std::string checkInput(const std::string& s) {
-	std::string str;
+	std::string inputField;
 	while (true) {
 		std::cout << "Enter the " + s + ": ";
-		char a = std::cin.get();
-		if (a == '\n') {
-			std::cout << "The input can not be empty...Please enter something" << '\n';
+		std::getline(std::cin, inputField);
+		inputField = trim(inputField);
+		if (inputField.size() == 0) {
+			std::cout << "The input can not be empty...Please enter something\n";
 		}
 		else {
-			std::string ans{ "" };
-			std::getline(std::cin, ans);
-			str = a + ans;
 			break;
 		}
 	}
-	return str;
+	return inputField;
 }
 
 void matchInpField(const std::string& inputField, std::string& arg1, std::string& arg2) {
@@ -462,15 +507,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 1:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "firstName: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				e.setFirstName(inputField);
 				break;
 			}
@@ -480,15 +524,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 2:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "middleName: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				e.setMiddleName(inputField);
 				break;
 			}
@@ -498,15 +541,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 3:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "lastName: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				e.setLastName(inputField);
 				break;
 			}
@@ -516,15 +558,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 4:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "dateOfBirth: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				if (EmployeeDB::Validator::validateDate(inputField)) {
 					e.setDateOfBirth(inputField);
 				}
@@ -532,7 +573,6 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 					std::cout << "Please enter valid input...\n";
 					continue;
 				}
-
 				break;
 			}
 		}
@@ -541,15 +581,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 5:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "mobileNo: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				if (EmployeeDB::Validator::validateMobile(inputField)) {
 					e.setMobileNo(std::stoll(inputField));
 				}
@@ -565,15 +604,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 6:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "email: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				if (EmployeeDB::Validator::validateEmail(inputField)) {
 					e.setEmail(inputField);
 				}
@@ -589,15 +627,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 7:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "address: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				e.setAddress(inputField);
 				break;
 			}
@@ -607,15 +644,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 8:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "gender: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				if (EmployeeDB::Validator::validateGender(inputField) == 1) {
 					e.setGender(EmployeeDB::Model::Gender::Male);
 				}
@@ -637,15 +673,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 9:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "dateOfJoining: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				if (EmployeeDB::Validator::validateDate(inputField)) {
 					e.setDateOfJoining(inputField);
 				}
@@ -653,7 +688,6 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 					std::cout << "Please enter valid input...\n";
 					continue;
 				}
-
 				break;
 			}
 		}
@@ -662,15 +696,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 10:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "mentorID: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				try {
 					e.setMentorID(std::stoi(inputField));
 				}
@@ -686,15 +719,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	case 11:
 	{
 		while (true) {
+			std::string inputField;
 			std::cout << "performanceMetric: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				try {
 					e.setPerformanceMetric(std::stod(inputField));
 				}
@@ -709,15 +741,14 @@ void updateEmp(const std::string& input, EmployeeDB::Model::Employee& e) {
 	}
 	case 12: {
 		while (true) {
+			std::string inputField;
 			std::cout << "bonus: ";
-			char a = std::cin.get();
-			if (a == '\n') {
-				std::cout << "It cannot be empty!!" << '\n';
+			std::getline(std::cin, inputField);
+			inputField = trim(inputField);
+			if (inputField.size() == 0) {
+				std::cout << "Please enter some value...\n";
 			}
 			else {
-				std::string ans{ "" };
-				std::getline(std::cin, ans);
-				std::string inputField = a + ans;
 				try {
 					e.setBonus(std::stoi(inputField));
 				}

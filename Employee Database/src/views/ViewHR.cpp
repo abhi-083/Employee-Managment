@@ -1,5 +1,6 @@
 #include"../../include/views/ViewHR.h"
 #include "../../include/Validator.h"
+
 #include<iostream>
 
 void askUserInput(EmployeeDB::Model::Employee& e);
@@ -7,6 +8,8 @@ void printEmpFields();
 void printEmpFieldsWithID();
 void matchInpField(const std::string& inputField, std::string&, std::string&);
 void updateEmp(const std::string&, EmployeeDB::Model::Employee&);
+std::string trim(std::string str, const std::string chars = "\t\n\v\f\r ");
+bool repeatOperation(const std::string& operation);
 
 void EmployeeDB::Console::inHR() {
 	while (true) {
@@ -144,14 +147,12 @@ bool EmployeeDB::Console::insertHR() {
 					while (true) {
 						std::string inputField;
 						std::cout << "hrSpecialization*: ";
-						char a = std::cin.get();
-						if (a == '\n') {
+						std::getline(std::cin, inputField);
+						inputField = trim(inputField);
+						if (inputField.size() == 0) {
 							std::cout << "hrSpecialization is mandatory...Please enter again!!" << '\n';
 						}
 						else {
-							std::string ans{ "" };
-							std::getline(std::cin, ans);
-							inputField = a + ans;
 							h.setHRSpecialization(inputField);
 							break;
 						}
@@ -171,9 +172,6 @@ bool EmployeeDB::Console::insertHR() {
 		}
 	}
 
-
-
-
 	//{
 	//	bool DbSuccess;
 	//	//Logic to send an object
@@ -188,36 +186,11 @@ bool EmployeeDB::Console::insertHR() {
 	//}
 
 
-	while (true) {
-		char in;
-		std::cout << "Do you want to insert another employee?(0/1): ";
-		in = std::cin.get();
-
-		if (in == '\n') {
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (std::cin.peek() != '\n') {
-			in = ' ';  // Validator will return false
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (EmployeeDB::Validator::validateCharInput(in)) {
-			if (in == '1') {
-				return true;
-			}
-			else {
-				std::cin.clear();
-				std::cin.ignore();
-				return false;
-			}
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
+	if (repeatOperation("insert")) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -266,7 +239,7 @@ bool EmployeeDB::Console::updateHR() {
 	}
 
 	while (true) {
-		printEmpFields();
+		//printEmpFields();
 		std::cout << "13. hrSpecialization*:" << '\n';
 		std::cout << "Enter the field which you want to update(1-13): ";
 
@@ -275,6 +248,9 @@ bool EmployeeDB::Console::updateHR() {
 			if (a == '\n') {
 				std::cin.clear();
 				std::cout << "Please enter valid input...\n";
+				std::cout << "Press enter to continue...\n";
+				std::cin.get();
+				system("cls");
 				x = false;
 			}
 			else {
@@ -286,15 +262,14 @@ bool EmployeeDB::Console::updateHR() {
 					if (EmployeeDB::Validator::validateUpdate(input)) {
 						if (std::stoi(input) == 13) {
 							while (true) {
+								std::string inputField;
 								std::cout << "hrSpecialization: ";
-								char a = std::cin.get();
-								if (a == '\n') {
-									std::cout << "Please enter some value!!" << '\n';
+								std::getline(std::cin, inputField);
+								inputField = trim(inputField);
+								if (inputField.size() == 0) {
+									std::cout << "Please enter some value...\n";
 								}
 								else {
-									std::string ans{ "" };
-									std::getline(std::cin, ans);
-									std::string inputField = a + ans;
 									h.setHRSpecialization(inputField);
 									break;
 								}
@@ -357,36 +332,11 @@ bool EmployeeDB::Console::updateHR() {
 	}
 
 
-	while (true) {
-		char in;
-		std::cout << "Do you want to update another employee?(0/1): ";
-		in = std::cin.get();
-
-		if (in == '\n') {
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (std::cin.peek() != '\n') {
-			in = ' ';  // Validator will return false
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (EmployeeDB::Validator::validateCharInput(in)) {
-			if (in == '1') {
-				return true;
-			}
-			else {
-				std::cin.clear();
-				std::cin.ignore();
-				return false;
-			}
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
+	if (repeatOperation("update")) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -420,6 +370,9 @@ bool EmployeeDB::Console::deleteHR() {
 			}
 			catch (...) {
 				std::cout << "Wrong input...Please enter integer!!\n";
+				std::cout << "Press enter to continue...\n";
+				std::cin.get();
+				system("cls");
 				continue;
 			}
 		}
@@ -476,36 +429,11 @@ bool EmployeeDB::Console::deleteHR() {
 		}
 	}
 
-	while (true) {
-		char in;
-		std::cout << "Do you want to delete another employee?(0/1): ";
-		in = std::cin.get();
-
-		if (in == '\n') {
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (std::cin.peek() != '\n') {
-			in = ' ';  // Validator will return false
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (EmployeeDB::Validator::validateCharInput(in)) {
-			if (in == '1') {
-				return true;
-			}
-			else {
-				std::cin.clear();
-				std::cin.ignore();
-				return false;
-			}
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
+	if (repeatOperation("delete")) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -545,6 +473,7 @@ bool EmployeeDB::Console::viewHR() {
 					return false;
 				}
 				else if (input == '1' || input == '2') {
+					system("cls");
 					std::string arg1, arg2;
 					switch (input) {
 					case '1': {
@@ -583,17 +512,16 @@ bool EmployeeDB::Console::viewHR() {
 									if (EmployeeDB::Validator::validateViewOfFields(inputField)) {
 										if (inputField == "15") {
 											arg1 = "hrSpecialization";
-											//std::cin.ignore();
 											while (true) {
+												std::string inputField;
 												std::cout << "Enter the hrSpecialization: ";
-												char a = std::cin.get();
-												if (a == '\n') {
-													std::cout << "The input can not be empty...Please enter something" << '\n';
+												std::getline(std::cin, inputField);
+												inputField = trim(inputField);
+												if (inputField.size() == 0) {
+													std::cout << "The input can not be empty...Please enter something\n";
 												}
 												else {
-													std::string ans{ "" };
-													std::getline(std::cin, ans);
-													arg2 = a + ans;
+													arg2 = inputField;
 													break;
 												}
 											}
@@ -652,35 +580,10 @@ bool EmployeeDB::Console::viewHR() {
 		}
 	}
 
-	while (true) {
-		char in;
-		std::cout << "Do you want to view another employee?(0/1): ";
-		in = std::cin.get();
-
-		if (in == '\n') {
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (std::cin.peek() != '\n') {
-			in = ' ';  // Validator will return false
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
-		else if (EmployeeDB::Validator::validateCharInput(in)) {
-			if (in == '1') {
-				return true;
-			}
-			else {
-				std::cin.clear();
-				std::cin.ignore();
-				return false;
-			}
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-		}
+	if (repeatOperation("view")) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }

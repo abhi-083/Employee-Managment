@@ -48,10 +48,10 @@
     <ClCompile Include="src\Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\views\CommonLogic.cpp">
+    <ClCompile Include="src\views\ViewDepartment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\views\ViewDepartment.cpp">
+    <ClCompile Include="src\views\CommonLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
