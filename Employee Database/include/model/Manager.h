@@ -11,7 +11,7 @@ namespace EmployeeDB::Model {
             managerID{ 0 },
             departmentID{ 0 },
             teamSize{ 0 },
-            yearsOfExperience{ 0 },
+            yearsOfExp{ 0 },
             projectTitle{ "" },
             role{ "" } {
         }
@@ -20,7 +20,7 @@ namespace EmployeeDB::Model {
             managerID{ 0 },
             departmentID{ 0 },
             teamSize{ 0 },
-            yearsOfExperience{ 0 },
+            yearsOfExp{ 0 },
             projectTitle{ "#" },
             role{ "#" } {
         }
@@ -50,11 +50,11 @@ namespace EmployeeDB::Model {
         }
 
         double getYearsOfExperience() const {
-            return yearsOfExperience;
+            return yearsOfExp;
         }
 
         void setYearsOfExperience(double years) {
-            yearsOfExperience = years;
+            yearsOfExp = years;
         }
 
         const std::string& getProjectTitle() const {
@@ -73,12 +73,11 @@ namespace EmployeeDB::Model {
             role = rl;
         }
 
-        double computeSalary() override { return 10.2; };
     private:
         int managerID;
         int departmentID;
         int teamSize;
-        double yearsOfExperience;
+        double yearsOfExp;
         std::string projectTitle;
         std::string role;
     };

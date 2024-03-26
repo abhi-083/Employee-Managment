@@ -16,8 +16,6 @@ namespace EmployeeDB::Model {
         void setAccountingTool(const std::string& tool) {
             accountingTool = tool;
         }
-
-        double computeSalary() override { return 10.2; };
     private:
         std::string accountingTool;
     };
