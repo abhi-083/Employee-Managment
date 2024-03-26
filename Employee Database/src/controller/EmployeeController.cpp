@@ -108,10 +108,8 @@ bool EmployeeController::checkEmployeeExistence(const std::string& ID, const std
 	}
 
 	if (callbackCount == 0) {
-		std::cout << "Callback is 0\n";
 		return false;
 	}
-	std::cout << "Callback: " << callbackCount << '\n';
 	return true;
 }
 
@@ -228,12 +226,12 @@ bool EmployeeController::getSalaryDetails(Salary& obj) {
 	auto getSalaryDetailsCallback = [](void* data, int argc, char** argv, char** azColName) -> int {
 		Salary* salaryObj = static_cast<Salary*>(data);
 
-		salaryObj->setDepartmentID(std::stoi(argv[1]));
-		salaryObj->setPerformanceMetric(std::stod(argv[2]));
-		salaryObj->setBonus(std::stod(argv[3]));
-		salaryObj->setBaseSalary(std::stod(argv[4]));
-		salaryObj->setAllowance(std::stod(argv[5]));
-		salaryObj->setDeduction(std::stod(argv[6]));
+		salaryObj->setDepartmentID(argv[1] ? std::stoi(argv[1]): 0);
+		salaryObj->setPerformanceMetric(argv[2] ? std::stod(argv[2]): 0.0);
+		salaryObj->setBonus(argv[3] ? std::stod(argv[3]) : 0.0);
+		salaryObj->setBaseSalary(argv[4] ? std::stod(argv[4]) : 0.0);
+		salaryObj->setAllowance(argv[5] ? std::stod(argv[5]) : 0.0);
+		salaryObj->setDeduction(argv[6] ? std::stod(argv[6]) : 0.0);
 		return 0;
 		};
 

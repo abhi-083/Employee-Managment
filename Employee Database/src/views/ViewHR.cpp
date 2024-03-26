@@ -244,12 +244,12 @@ bool EmployeeDB::Console::deleteHR() {
 		return false;
 	}
 
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::HRController::selectHR("employeeID", std::to_string(id));
+
 	if (!dltConfirmation(id , "HR")) {
 		return false;
 	}
-
-	bool DBSuccess;
-	DBSuccess = EmployeeDB::Controller::HRController::selectHR("employeeID", std::to_string(id));
 
 	std::cin.ignore();
 	if (repeatOperation("delete", "HR")) {

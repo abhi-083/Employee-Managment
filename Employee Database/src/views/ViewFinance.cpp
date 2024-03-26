@@ -242,12 +242,13 @@ bool EmployeeDB::Console::deleteInFinance() {
 		return false;
 	}
 
+	bool DBSuccess;
+	DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance("employeeID", std::to_string(id));
+
 	if (!dltConfirmation(id , "Finance")) {
 		return false;
 	}
 
-	bool DBSuccess;
-	DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance("employeeID", std::to_string(id));
 
 	std::cin.ignore();
 	if (repeatOperation("delete", "Finance")) {

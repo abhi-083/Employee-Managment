@@ -9,6 +9,7 @@ using EmployeeDB::Controller::EngineerController;
 using EmployeeDB::Controller::DepartmentController;
 using EmployeeDB::DBManager;
 
+
 bool EngineerController::insertEngineer(Engineer& obj) {
 	int departmentID = DepartmentController::getDepartmentIDbyName("Engineer");
 
@@ -23,6 +24,7 @@ bool EngineerController::insertEngineer(Engineer& obj) {
 
 	if (!employeeResult) {
 		std::cerr << "Engineer could not be inserted.\n";
+
 		return false;
 	}
 
@@ -50,6 +52,7 @@ bool EngineerController::selectEngineer(const std::string& attributeName, const 
 	try {
 		int rowCount = DBManager::instance().executeSelectSalaryQuery(queryString.c_str());
 		std::cout << rowCount << std::string{ " record" } + (rowCount > 1 ? "s" : "") + " found\n";
+
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
@@ -97,6 +100,7 @@ bool EngineerController::updateEngineer(Engineer& obj) {
 		try {
 			DBManager::instance().executeQuery(queryString.c_str());
 			std::cout << "Successfully updated an Engineer.\n";
+
 		}
 		catch (const std::exception& e) {
 			std::cerr << e.what() << '\n';

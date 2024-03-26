@@ -170,5 +170,14 @@
     <ClInclude Include="include\model\Salary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="loggingInfo\fileDump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="loggingInfo\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="loggingInfo\logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -119,7 +119,7 @@ bool EmployeeDB::Console::makeManager() {
 				DepartmentID =EmployeeDB::Controller::EmployeeController::getDepartmentIDbyEmployeeID(m.getManagerID());
 
 				if (DepartmentID == -1) {
-					std::cerr << "Department was not found for provided managerID...\n";
+					std::cerr << "No employee was not found for provided managerID...\n";
 					continue;
 				}
 
@@ -238,11 +238,12 @@ bool EmployeeDB::Console::updateManager() {
 	}
 
 	m.setEmployeeID(id);
+	m.setManagerID(id);
 	bool DBSuccess;
 
 	while (true) {
 		DBSuccess = EmployeeDB::Controller::ManagerController::selectManager("employeeID", std::to_string(id));
-		printEmpFields("manager");
+		printEmpFields("Manager");
 		std::cout << "Enter the field which you want to update(1-16): ";
 
 		while (true) {
