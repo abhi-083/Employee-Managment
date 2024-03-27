@@ -104,5 +104,8 @@ bool FinanceController::updateFinance(Finance& obj) {
 			return false;
 		}
 	}
+	else if (employeeResult) {   // ---------- ADDED
+		std::cout << "Successfully updated a Finance.\n";
+	}
 	return true;
 }

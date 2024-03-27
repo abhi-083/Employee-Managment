@@ -38,3 +38,5 @@ bin-int/
 
 #others
 *.docx
+*.txt
+*.csv

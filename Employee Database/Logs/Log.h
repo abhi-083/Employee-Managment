@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include<string>
-#include "fileDump.h"
+#include "FileDump.h"
 #include<fstream>
 #include<chrono>
 

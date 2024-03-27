@@ -1,8 +1,8 @@
 #ifndef logger
 #define logger 
 
-#include"log.h"
-#include"fileDump.h"
+#include"Log.h"
+#include"FileDump.h"
 #include<iostream>
 
 using systemLog::Log;

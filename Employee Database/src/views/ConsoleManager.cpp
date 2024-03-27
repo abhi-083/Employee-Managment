@@ -10,6 +10,7 @@
 #include<iostream>
 
 using EmployeeDB::DBManager;
+void tableToCSV();
 
 void EmployeeDB::Console::viewMenu() {
 	DBManager::executeConfigQuery();
@@ -87,6 +88,7 @@ void EmployeeDB::Console::viewFields(const char& input) {
 		break;
 	case '6':
 		inDepartment();
+		//tableToCSV();
 		break;
 	}
 	return;

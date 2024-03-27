@@ -75,6 +75,9 @@
     <ClCompile Include="src\controller\QAController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dumpToCSV\exportToCSV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\sqlite\sqlite3.h">
@@ -170,13 +173,13 @@
     <ClInclude Include="include\model\Salary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loggingInfo\fileDump.h">
+    <ClInclude Include="Logs\FileDump.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loggingInfo\log.h">
+    <ClInclude Include="Logs\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loggingInfo\logger.h">
+    <ClInclude Include="Logs\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
