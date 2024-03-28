@@ -4,11 +4,11 @@
 
 namespace EmployeeDB::Console {
 
-	void inEngineer();
-	void operationOfEng(const char& input);
+	void engineerMenu() noexcept;
+	void operationOfEng(const char& input) noexcept;
 	bool insertEngineer();
-	bool deleteEngineer();
 	bool updateEngineer();
+	bool deleteEngineer();
 	bool viewEngineer();
 }
 

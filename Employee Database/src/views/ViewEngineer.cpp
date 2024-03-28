@@ -2,62 +2,11 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/EngineerController.h"
 
-void EmployeeDB::Console::inEngineer() {
-	while (true) {
-		std::cout << "0. Quit\n";
-		std::cout << "1. Insert\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on Engineer: ";
-
-		char input;
-		input = std::cin.get();
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-
-			operationOfEng(input);
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+void EmployeeDB::Console::engineerMenu() noexcept {
+	inputForEnt("Engineer");
 }
 
-void EmployeeDB::Console::operationOfEng(const char& input) {
+void EmployeeDB::Console::operationOfEng(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
@@ -104,19 +53,7 @@ bool EmployeeDB::Console::insertEngineer() {
 	}
 	else {
 		askUserInput(e);
-		while (true) {
-			std::string inputField;
-			std::cout << "technology*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "technology is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				e.setTechnology(inputField);
-				break;
-			}
-		}
+		e.setTechnology(mandatoryWithoutValidation("technology", "technology is mandatory...Please enter again!!"));
 	}
 
 	// ------------------LOGIC----------------------
@@ -124,7 +61,7 @@ bool EmployeeDB::Console::insertEngineer() {
 	//Logic to send an object
 	DbSuccess = EmployeeDB::Controller::EngineerController::insertEngineer(e);
 	if (DbSuccess) {
-		std::cout << "Employee Entered SuccessFull\n";
+		std::cout << "Employee Entered Successfully\n";
 	}
 	else {
 		std::cout << "Please enter to continue...\n";
@@ -172,25 +109,12 @@ bool EmployeeDB::Console::updateEngineer() {
 			else {
 				std::string str;
 				std::getline(std::cin, str);
-				//std::cin >> str;
 				std::string input = a + str;
 
 				while (true) {
 					if (EmployeeDB::Validator::validateUpdate(input)) {
 						if (std::stoi(input) == 13) {
-							while (true) {
-								std::string inputField;
-								std::cout << "technology: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									e.setTechnology(inputField);
-									break;
-								}
-							}
+							e.setTechnology(mandatoryWithoutValidation("technology", "technology is mandatory...Please enter again!!"));
 						}
 						else {
 							updateEmp(input, e);
@@ -234,7 +158,7 @@ bool EmployeeDB::Console::updateEngineer() {
 	}
 }
 
-bool EmployeeDB::Console::deleteEngineer() {
+bool EmployeeDB::Console::deleteEngineer(){
 
 	EmployeeDB::Model::Engineer e;
 

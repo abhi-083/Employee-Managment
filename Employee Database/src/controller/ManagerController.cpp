@@ -20,7 +20,7 @@ bool ManagerController::insertManager(Manager& obj) {
 		std::to_string(obj.getManagerID()) + ", " +
 		std::to_string(obj.getDepartmentID()) + ", " +
 		std::to_string(obj.getTeamSize()) + ", " +
-		std::to_string(obj.getYearsOfExperience()) + ", " +
+		std::to_string(obj.getYearsOfExp()) + ", " +
 		(obj.getProjectTitle().size() == 0 ? "NULL" : "\"" + obj.getProjectTitle() + "\"") + "," +
 		(obj.getRole().size() == 0 ? "NULL" : "\"" + obj.getRole() + "\"") + ");";
 
@@ -71,11 +71,11 @@ std::string ManagerController::getUpdateQueryCondition(Manager& obj) {
 	if (obj.getTeamSize() != -1) {
 		updateQueryCondition += "teamSize = " + std::to_string(obj.getTeamSize());
 	}
-	if (obj.getYearsOfExperience() != -1) {
+	if (obj.getYearsOfExp() != -1) {
 		if (updateQueryCondition.size() != 0) {
 			updateQueryCondition += ", ";
 		}
-		updateQueryCondition += "yearsOfExp = " + std::to_string(obj.getYearsOfExperience());
+		updateQueryCondition += "yearsOfExp = " + std::to_string(obj.getYearsOfExp());
 	}
 	if (obj.getProjectTitle() != "#") {
 		if (updateQueryCondition.size() != 0) {

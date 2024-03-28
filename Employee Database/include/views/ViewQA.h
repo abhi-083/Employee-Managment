@@ -4,8 +4,8 @@
 
 namespace EmployeeDB::Console {
 
-	void inQA();
-	void operationOfQA(const char& input);
+	void QAMenu() noexcept;
+	void operationOfQA(const char& input) noexcept;
 	bool insertInQA();
 	bool deleteInQA();
 	bool updateInQA();

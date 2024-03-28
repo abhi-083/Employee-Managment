@@ -6,13 +6,14 @@
 #include "ViewQA.h"
 #include "ViewDepartment.h"
 #include "Validator.h"
-#include"../../include/DBManager.h"
+#include "DBManager.h"
 #include<iostream>
 
 using EmployeeDB::DBManager;
+
 void tableToCSV();
 
-void EmployeeDB::Console::viewMenu() {
+void EmployeeDB::Console::viewMenu() noexcept {
 	DBManager::executeConfigQuery();
 	system("cls");
 	while (true) {
@@ -65,29 +66,29 @@ void EmployeeDB::Console::viewMenu() {
 	}
 }
 
-void EmployeeDB::Console::viewFields(const char& input) {
+void EmployeeDB::Console::viewFields(const char& input) noexcept {
 	std::cin.clear();
 	std::cin.ignore();
 	switch (input) {
 	case 0:
 		break;
 	case '1':
-		inEngineer();
+		engineerMenu();
 		break;
 	case '2':
-		inFinance();
+		financeMenu();
 		break;
 	case '3':
-		inHR();
+		HRMenu();
 		break;
 	case '4':
-		inQA();
+		QAMenu();
 		break;
 	case '5':
-		inManager();
+		managerMenu();
 		break;
 	case '6':
-		inDepartment();
+		departmentMenu();
 		//tableToCSV();
 		break;
 	}

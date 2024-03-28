@@ -2,62 +2,11 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/FinanceController.h"
 
-void EmployeeDB::Console::inFinance() {
-	while (true) {
-
-		std::cout << "0. Quit\n";
-		std::cout << "1. Insert\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on Finance: ";
-
-		char input;
-		input = std::cin.get();
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-
-			operationOfFin(input);
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+void EmployeeDB::Console::financeMenu() noexcept {
+	inputForEnt("Finance");
 }
-void EmployeeDB::Console::operationOfFin(const char& input) {
+
+void EmployeeDB::Console::operationOfFin(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
@@ -92,6 +41,7 @@ void EmployeeDB::Console::operationOfFin(const char& input) {
 	}
 	}
 }
+
 bool EmployeeDB::Console::insertInFinance() {
 	EmployeeDB::Model::Finance f;
 
@@ -103,19 +53,7 @@ bool EmployeeDB::Console::insertInFinance() {
 	}
 	else {
 		askUserInput(f);
-		while (true) {
-			std::string inputField;
-			std::cout << "accountingTool*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "accountingTool is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				f.setAccountingTool(inputField);
-				break;
-			}
-		}
+		f.setAccountingTool(mandatoryWithoutValidation("accountingTool", "accountingTool is mandatory...Please enter again!!"));
 	}
 
 	// ------------------LOGIC----------------------
@@ -177,19 +115,7 @@ bool EmployeeDB::Console::updateInFinance() {
 				while (true) {
 					if (EmployeeDB::Validator::validateUpdate(input)) {
 						if (std::stoi(input) == 13) {
-							while (true) {
-								std::string inputField;
-								std::cout << "accountingTool: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									f.setAccountingTool(inputField);
-									break;
-								}
-							}
+							f.setAccountingTool(mandatoryWithoutValidation("accountingTool", "accountingTool is mandatory...Please enter again!!"));
 						}
 						else {
 							updateEmp(input, f);
@@ -245,7 +171,7 @@ bool EmployeeDB::Console::deleteInFinance() {
 	bool DBSuccess;
 	DBSuccess = EmployeeDB::Controller::FinanceController::selectFinance("employeeID", std::to_string(id));
 
-	if (!dltConfirmation(id , "Finance")) {
+	if (!dltConfirmation(id, "Finance")) {
 		return false;
 	}
 

@@ -2,63 +2,11 @@
 #include "../../include/views/Common.h"
 #include "../../include/controller/HRController.h"
 
-void EmployeeDB::Console::inHR() {
-	while (true) {
-		std::cout << "0. Quit\n";
-		std::cout << "1. Insert\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on HR: ";
-
-		char input;
-		input = std::cin.get();
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-
-			operationOfHR(input);
-
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+void EmployeeDB::Console::HRMenu() noexcept {
+	inputForEnt("HR");
 }
 
-void EmployeeDB::Console::operationOfHR(const char& input) {
+void EmployeeDB::Console::operationOfHR(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
@@ -105,21 +53,9 @@ bool EmployeeDB::Console::insertHR() {
 	}
 	else {
 		askUserInput(h);
-		while (true) {
-			std::string inputField;
-			std::cout << "hrSpecialization*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "hrSpecialization is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				h.setHRSpecialization(inputField);
-				break;
-			}
-		}
+		h.setHRSpecialization(mandatoryWithoutValidation("hrSpecialization", "hrSpecialization is mandatory...Please enter again!!"));
 	}
-	
+
 
 	// ------------------LOGIC----------------------
 	bool DbSuccess;
@@ -179,19 +115,7 @@ bool EmployeeDB::Console::updateHR() {
 				while (true) {
 					if (EmployeeDB::Validator::validateUpdate(input)) {
 						if (std::stoi(input) == 13) {
-							while (true) {
-								std::string inputField;
-								std::cout << "hrSpecialization: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									h.setHRSpecialization(inputField);
-									break;
-								}
-							}
+							h.setHRSpecialization(mandatoryWithoutValidation("hrSpecialization", "hrSpecialization is mandatory...Please enter again!!"));
 						}
 						else {
 							updateEmp(input, h);
@@ -247,7 +171,7 @@ bool EmployeeDB::Console::deleteHR() {
 	bool DBSuccess;
 	DBSuccess = EmployeeDB::Controller::HRController::selectHR("employeeID", std::to_string(id));
 
-	if (!dltConfirmation(id , "HR")) {
+	if (!dltConfirmation(id, "HR")) {
 		return false;
 	}
 

@@ -3,63 +3,11 @@
 #include "../../include/controller/ManagerController.h"
 #include "../../include/controller/EmployeeController.h"
 
-void EmployeeDB::Console::inManager() {
-	while (true) {
-
-		std::cout << "0. Quit\n";
-		std::cout << "1. Make New Manager\n";
-		std::cout << "2. Update\n";
-		std::cout << "3. Delete\n";
-		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on Manager: ";
-
-		char input;
-		input = std::cin.get();
-		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (std::cin.peek() != '\n') {
-			input = ' ';
-
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
-
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-		else if (EmployeeDB::Validator::validateInputMenu(input)) {
-
-			system("cls");
-
-			if (input == '0') {
-				std::exit(0);
-			}
-			if (input == '5') {
-				std::cin.clear();
-				std::cin.ignore();
-				return;
-			}
-
-			operationOfMan(input);
-		}
-		else {
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n\n";
-			std::cout << "Press enter to continue...\n";
-			std::cin.get();
-			system("cls");
-		}
-	}
+void EmployeeDB::Console::managerMenu() noexcept {
+	inputForEnt("Manager");
 }
 
-void EmployeeDB::Console::operationOfMan(const char& input) {
+void EmployeeDB::Console::operationOfMan(const char& input) noexcept {
 	bool repeat{ true };
 	switch (input) {
 	case '0':
@@ -116,7 +64,7 @@ bool EmployeeDB::Console::makeManager() {
 				m.setManagerID(ID);
 
 				int DepartmentID;
-				DepartmentID =EmployeeDB::Controller::EmployeeController::getDepartmentIDbyEmployeeID(m.getManagerID());
+				DepartmentID = EmployeeDB::Controller::EmployeeController::getDepartmentIDbyEmployeeID(m.getManagerID());
 
 				if (DepartmentID == -1) {
 					std::cerr << "No employee was not found for provided managerID...\n";
@@ -131,79 +79,10 @@ bool EmployeeDB::Console::makeManager() {
 				std::cout << "Please enter valid input...\n";
 			}
 		}
-		while (true) {
-			std::string inputField;
-			std::cout << "teamSize*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "teamSize is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				try {
-					m.setTeamSize(std::stoi(inputField));
-				}
-				catch (...) {
-					std::cerr << "Invalid input...Please enter integer\n";
-					continue;
-				}
-				break;
-			}
-		}
-
-		while (true) {
-
-			std::string inputField;
-			std::cout << "yearsOfExperince*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "yearsOfExperince is mandatory...Please enter again!!" << '\n';
-			}
-			else {
-				try {
-					m.setYearsOfExperience(std::stoi(inputField));
-				}
-				catch (...) {
-					std::cerr << "Invalid input...Please enter integer\n";
-					continue;
-				}
-				break;
-			}
-		}
-
-		while (true) {
-			std::string inputField;
-			std::cout << "projectTitle: ";
-			std::getline(std::cin, inputField);
-			if (inputField.size() == 0) {
-				break;
-			}
-			else {
-				inputField = trim(inputField);
-				if (inputField.size() == 0) {
-					std::cout << "Please enter valid input...\n";
-				}
-				else {
-					m.setProjectTitle(inputField);
-					break;
-				}
-			}
-		}
-
-		while (true) {
-			std::string inputField;
-			std::cout << "role*: ";
-			std::getline(std::cin, inputField);
-			inputField = trim(inputField);
-			if (inputField.size() == 0) {
-				std::cout << "role is mandatory...Please enter again!!\n";
-			}
-			else {
-				m.setRole(inputField);
-				break;
-			}
-		}
+		m.setTeamSize(std::stoi(mandatoryWithValidation("teamSize", "teamSize is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
+		m.setYearsOfExp(std::stoi(mandatoryWithValidation("yearsOfExperince", "yearsOfExperince is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
+		m.setProjectTitle(nonMandatoryWithoutValidation("projectTitle", "Please enter valid input..."));
+		m.setRole(mandatoryWithoutValidation("role", "role is mandatory...Please enter again!!"));
 	}
 
 	// ------------------LOGIC----------------------
@@ -237,8 +116,8 @@ bool EmployeeDB::Console::updateManager() {
 		return false;
 	}
 
-	m.setEmployeeID(id);
 	m.setManagerID(id);
+	m.setEmployeeID(id);
 	bool DBSuccess;
 
 	while (true) {
@@ -265,75 +144,16 @@ bool EmployeeDB::Console::updateManager() {
 				while (true) {
 					if (EmployeeDB::Validator::validateManUpdate(input)) {
 						if (std::stoi(input) == 13) {
-							while (true) {
-								std::string inputField;
-								std::cout << "teamSize: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									try {
-										m.setTeamSize(std::stoi(inputField));
-										break;
-									}
-									catch (...) {
-										std::cout << "Invalid input...Pleas enter an integer!!\n";
-									}
-								}
-
-							}
+							m.setTeamSize(std::stoi(mandatoryWithValidation("teamSize", "teamSize is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
 						}
 						else if (std::stoi(input) == 14) {
-							while (true) {
-								std::string inputField;
-								std::cout << "yearsOfExperince: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									try {
-										m.setYearsOfExperience(std::stoi(inputField));
-										break;
-									}
-									catch (...) {
-										std::cout << "Invalid input...Please enter an integer\n";
-									}
-								}
-							}
+							m.setYearsOfExp(std::stoi(mandatoryWithValidation("yearsOfExperince", "yearsOfExperince is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
 						}
 						else if (std::stoi(input) == 15) {
-							while (true) {
-								std::string inputField;
-								std::cout << "projectTitle: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									m.setProjectTitle(inputField);
-									break;
-								}
-							}
+							m.setProjectTitle(mandatoryWithoutValidation("projectTitle", "Please enter valid input..."));
 						}
 						else if (std::stoi(input) == 16) {
-							while (true) {
-								std::string inputField;
-								std::cout << "role: ";
-								std::getline(std::cin, inputField);
-								inputField = trim(inputField);
-								if (inputField.size() == 0) {
-									std::cout << "Please enter some value...\n";
-								}
-								else {
-									m.setRole(inputField);
-									break;
-								}
-							}
+							m.setRole(mandatoryWithoutValidation("role", "role is mandatory...Please enter again!!"));
 						}
 						else {
 							updateEmp(input, m);
@@ -352,7 +172,7 @@ bool EmployeeDB::Console::updateManager() {
 						break;
 					}
 				}
-			break;
+				break;
 			}
 		}
 
@@ -389,7 +209,7 @@ bool EmployeeDB::Console::deleteManager() {
 	bool DBSuccess;
 	DBSuccess = EmployeeDB::Controller::ManagerController::selectManager("employeeID", std::to_string(id));
 
-	if (!dltConfirmation(id , "Manager")) {
+	if (!dltConfirmation(id, "Manager")) {
 		return false;
 	}
 
@@ -403,7 +223,7 @@ bool EmployeeDB::Console::deleteManager() {
 }
 
 bool EmployeeDB::Console::viewManager() {
-	
+
 	char input;
 	bool x = viewOperation(input);
 	if (!x) {

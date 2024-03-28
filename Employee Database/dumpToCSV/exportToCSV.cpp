@@ -17,9 +17,8 @@ int callDump(void* tab, int Nocolumn, char** columnValue, char** columnName) {
 std::vector<std::string> Tables() {
 
 	const char* query = "SELECT name FROM sqlite_master WHERE type='table';";
-	char* m_errorMsg{};
 
-	EmployeeDB::DBManager::instance().dumpCSV(query, callDump, m_errorMsg);
+	EmployeeDB::DBManager::instance().executeCustomQuery(query, callDump, nullptr);
 
 	return tableName;
 }
@@ -66,7 +65,7 @@ void tableToCSV() {
 
 	namespace f = std::filesystem;
 	f::path p{ "C:/Users/ZTI/Downloads/without controller/Employee Database/dumpToCSV/table.csv" };
-	std::ofstream out{ p.lexically_normal() };
+	std::ofstream out{ p };
 	std::string query;
 	for (auto& table : tables) {
 		query = "SELECT * FROM " + table;
@@ -75,14 +74,23 @@ void tableToCSV() {
 		tabledata += table;
 		tabledata += "\n";
 		//tabledata += "---------------\n";
-		EmployeeDB::DBManager::instance().executeDumpQuery(query.c_str(), selCallback, &x);
+		EmployeeDB::DBManager::instance().executeCustomQuery(query.c_str(), selCallback, &x);
 		tabledata += "\n";
 	}
-	out << tabledata;
+	if(out.is_open()){
+		out << tabledata;
+		out.close();
+	}
+	else {
+		std::cout << "Error opening the file...\n";
+	}
 
 	for (auto& t : tables) {
 		std::cout << t << " table dumped\n";
 	}std::cout << '\n';
+
+	tableName.resize(0);
+
 	std::cout << "Exported to CSV file. Press enter to continue...";
 	std::cin.get();
 	system("cls");

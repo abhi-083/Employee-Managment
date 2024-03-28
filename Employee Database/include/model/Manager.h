@@ -49,11 +49,11 @@ namespace EmployeeDB::Model {
             teamSize = size;
         }
 
-        double getYearsOfExperience() const {
+        double getYearsOfExp() const {
             return yearsOfExp;
         }
 
-        void setYearsOfExperience(double years) {
+        void setYearsOfExp(double years) {
             yearsOfExp = years;
         }
 
