@@ -152,7 +152,7 @@ void EmployeeDB::Console::printEmpFields(const std::string_view& empType) {
 			std::cout << "13. teamSize*:" << '\n';
 			std::cout << "14. yearsOfExperince*:" << '\n';
 			std::cout << "15. projectTitle*:" << '\n';
-			std::cout << "16. role*:" << '\n';
+			std::cout << "16. role:" << '\n';
 		}
 	}
 }
@@ -197,7 +197,7 @@ void EmployeeDB::Console::printEmpFieldsWithID(const std::string_view& empType) 
 			std::cout << "15. teamSize*:" << '\n';
 			std::cout << "16. yearsOfExperince*:" << '\n';
 			std::cout << "17. projectTitle*:" << '\n';
-			std::cout << "18. role*:" << '\n';
+			std::cout << "18. role:" << '\n';
 		}
 	}
 }

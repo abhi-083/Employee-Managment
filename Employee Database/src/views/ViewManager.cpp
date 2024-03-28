@@ -82,7 +82,7 @@ bool EmployeeDB::Console::makeManager() {
 		m.setTeamSize(std::stoi(mandatoryWithValidation("teamSize", "teamSize is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
 		m.setYearsOfExp(std::stoi(mandatoryWithValidation("yearsOfExperince", "yearsOfExperince is mandatory...Please enter again!!", EmployeeDB::Validator::validateNum)));
 		m.setProjectTitle(nonMandatoryWithoutValidation("projectTitle", "Please enter valid input..."));
-		m.setRole(mandatoryWithoutValidation("role", "role is mandatory...Please enter again!!"));
+		m.setRole(nonMandatoryWithoutValidation("role", "Please enter valid input..."));
 	}
 
 	// ------------------LOGIC----------------------
@@ -153,7 +153,7 @@ bool EmployeeDB::Console::updateManager() {
 							m.setProjectTitle(mandatoryWithoutValidation("projectTitle", "Please enter valid input..."));
 						}
 						else if (std::stoi(input) == 16) {
-							m.setRole(mandatoryWithoutValidation("role", "role is mandatory...Please enter again!!"));
+							m.setRole(mandatoryWithoutValidation("role", "Please enter valid input..."));
 						}
 						else {
 							updateEmp(input, m);

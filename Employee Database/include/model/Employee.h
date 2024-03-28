@@ -3,6 +3,7 @@
 
 #include <string>
 #include <algorithm>
+#include <optional>
 #include "Salary.h"
 
 namespace EmployeeDB::Model {
@@ -17,7 +18,7 @@ namespace EmployeeDB::Model {
     public:
         Employee() :
             m_FirstName{ "" },
-            m_MiddleName{ "" },
+            m_MiddleName{ std::nullopt },
             m_LastName{ "" },
             m_Email{ "" },
             m_Address{ "" },
@@ -34,7 +35,7 @@ namespace EmployeeDB::Model {
 
         Employee(bool isUpdateObj) :
             m_FirstName{ "#" },
-            m_MiddleName{ "#" },
+            m_MiddleName{ std::nullopt },
             m_LastName{ "#" },
             m_Email{ "#" },
             m_Address{ "#" },
@@ -95,7 +96,7 @@ namespace EmployeeDB::Model {
         const std::string& getFirstName() const {
             return m_FirstName;
         }
-        const std::string& getMiddleName() const {
+        const std::optional<std::string>& getMiddleName() const {
             return m_MiddleName;
         }
         const std::string& getLastName() const {
@@ -107,16 +108,16 @@ namespace EmployeeDB::Model {
         const std::string& getAddress() const {
             return m_Address;
         }
-        const std::string& getDateOfBirth() const {
+        const std::optional<std::string>& getDateOfBirth() const {
             return m_DateOfBirth;
         }
         const std::string& getDateOfJoining() const {
             return m_DateOfJoining;
         }
-        double getPerformanceMetric() const {
+        std::optional<double> getPerformanceMetric() const {
             return m_PerformanceMetric;
         }
-        double getBonus() const {
+        std::optional<double> getBonus() const {
             return m_Bonus;
         }
         long long getMobileNo() const {
@@ -140,14 +141,14 @@ namespace EmployeeDB::Model {
         private:
 
         std::string m_FirstName;
-        std::string m_MiddleName;
+        std::optional<std::string> m_MiddleName;
         std::string m_LastName;
         std::string m_Email;
         std::string m_Address;
-        std::string m_DateOfBirth;
+        std::optional<std::string> m_DateOfBirth;
         std::string  m_DateOfJoining;
-        double m_PerformanceMetric;
-        double m_Bonus;
+        std::optional<double> m_PerformanceMetric;
+        std::optional<double> m_Bonus;
         long long m_MobileNumber;
         Gender m_Gender;
         int m_EmployeeID;

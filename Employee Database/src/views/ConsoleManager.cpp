@@ -1,4 +1,5 @@
 #include "ConsoleManager.h"
+#include "ViewExportCSV.h"
 #include "ViewEngineer.h"
 #include "ViewFinance.h"
 #include "ViewHR.h"
@@ -25,6 +26,7 @@ void EmployeeDB::Console::viewMenu() noexcept {
 		std::cout << "4. QA\n";
 		std::cout << "5. Manager\n";
 		std::cout << "6. Department\n";
+		std::cout << "7. Export Table as CSV\n";
 		std::cout << "Please select entity on which you want to perform operation: ";
 
 		char input;
@@ -89,6 +91,9 @@ void EmployeeDB::Console::viewFields(const char& input) noexcept {
 		break;
 	case '6':
 		departmentMenu();
+		break;
+	case '7':
+		ExportCSVMenu();
 		//tableToCSV();
 		break;
 	}

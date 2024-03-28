@@ -21,8 +21,8 @@ namespace EmployeeDB::Model {
             departmentID{ 0 },
             teamSize{ 0 },
             yearsOfExp{ 0 },
-            projectTitle{ "#" },
-            role{ "#" } {
+            projectTitle{ std::nullopt },
+            role{ std::nullopt } {
         }
 
         int getManagerID() const {
@@ -57,7 +57,7 @@ namespace EmployeeDB::Model {
             yearsOfExp = years;
         }
 
-        const std::string& getProjectTitle() const {
+        const std::optional<std::string>& getProjectTitle() const {
             return projectTitle;
         }
 
@@ -65,7 +65,7 @@ namespace EmployeeDB::Model {
             projectTitle = title;
         }
 
-        const std::string& getRole() const {
+        const std::optional<std::string>& getRole() const {
             return role;
         }
 
@@ -78,8 +78,8 @@ namespace EmployeeDB::Model {
         int departmentID;
         int teamSize;
         double yearsOfExp;
-        std::string projectTitle;
-        std::string role;
+        std::optional<std::string> projectTitle;
+        std::optional<std::string> role;
     };
 }
 
