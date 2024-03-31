@@ -2,12 +2,12 @@
 
 #include "sqlite3.h"
 #include "./include/DBManager.h"
-#include "./include/views/ConsoleManager.h"
+#include "./include/views/ViewMainMenu.h"
 
 
 int main() {
 	
-	EmployeeDB::Console::viewMenu();
+	EmployeeDB::Console::viewMainMenu();
 
 	return 0;
 }

@@ -7,7 +7,8 @@ using EmployeeDB::Controller::ExportController;
 
 
 void EmployeeDB::Console::ExportCSVMenu() {
-	while(true){
+	while (true) {
+		std::cout << "----------------------------------------- Export CSV ------------------------------------------------\n";
 		std::cout << "0. Quit\n";
 		std::cout << "1. Export All Tables\n";
 		std::cout << "2. Export Department Table\n";
@@ -18,13 +19,13 @@ void EmployeeDB::Console::ExportCSVMenu() {
 		std::cout << "7. Export Manager Table\n";
 		std::cout << "8. Export QA Table\n";
 		std::cout << "9. Main Menu\n";
-		std::cout << "Select the table which you want to export as CSV(0-9): ";
+		std::cout << "\x1B[36mSelect the table which you want to export as CSV(0-9): \033[0m";
 
 		char input;
 		input = std::cin.get();
 		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -33,9 +34,9 @@ void EmployeeDB::Console::ExportCSVMenu() {
 
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-9)...\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-9)...\033[0m\n";
 
-			std::cout << "Press enter to continue...\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -78,14 +79,14 @@ void EmployeeDB::Console::ExportCSVMenu() {
 			if (result) {
 				std::cin.ignore();
 				char in;
-				std::cout << "Do you want to export another table?(0/1): ";
+				std::cout << "\x1B[36mDo you want to export another table?(0/1): \033[0m";
 				in = std::cin.get();
 				if (EmployeeDB::Validator::validateCharInput(in)) {
 					if (in == '0') {
 						std::cin.clear();
 						std::cin.ignore();
 						system("cls");
-						return ;
+						return;
 					}
 					else {
 						std::cin.clear();
@@ -94,15 +95,15 @@ void EmployeeDB::Console::ExportCSVMenu() {
 					}
 				}
 				else {
-					std::cout << "Please enter valid input...\n";
-					std::cout << "Press enter to continue...\n";
+					std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
 					system("cls");
 				}
 			}
 			else {
 				std::cin.ignore();
-				std::cout << "Press enter to continue...\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 			}
@@ -110,8 +111,8 @@ void EmployeeDB::Console::ExportCSVMenu() {
 		else {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-9)...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}

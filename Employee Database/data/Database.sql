@@ -1,4 +1,4 @@
-CREATE TABLE "Department" (
+5CREATE TABLE "Department" (
 	"departmentID"	INTEGER NOT NULL UNIQUE,
 	"departmentName"	TEXT NOT NULL UNIQUE,
 	"baseSalary"	REAL NOT NULL,

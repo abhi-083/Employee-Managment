@@ -35,8 +35,8 @@
 .vs/
 bin/
 bin-int/
+tablesInCSV/
 
 #others
 *.docx
 *.txt
-*.csv

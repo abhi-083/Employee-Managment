@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\views\ViewTable.cpp" />
     <ClInclude Include="include\controller\DepartmentController.h" />
     <ClInclude Include="include\controller\EmployeeController.h" />
     <ClInclude Include="include\controller\EngineerController.h" />
@@ -159,7 +160,9 @@
     <ClInclude Include="include\controller\HRController.h" />
     <ClInclude Include="include\controller\ManagerController.h" />
     <ClInclude Include="include\controller\QAController.h" />
+    <ClInclude Include="include\controller\TableController.h" />
     <ClInclude Include="include\model\Salary.h" />
+    <ClInclude Include="include\model\Table.h" />
     <ClInclude Include="include\views\Common.h" />
     <ClInclude Include="include\views\ViewDepartment.h" />
     <ClCompile Include="main.cpp" />
@@ -173,6 +176,7 @@
     <ClCompile Include="src\controller\HRController.cpp" />
     <ClCompile Include="src\controller\ManagerController.cpp" />
     <ClCompile Include="src\controller\QAController.cpp" />
+    <ClCompile Include="src\controller\TableController.cpp" />
     <ClCompile Include="src\Validator.cpp" />
     <ClCompile Include="src\views\Common.cpp" />
     <ClCompile Include="src\views\ConsoleManager.cpp" />
@@ -183,6 +187,7 @@
     <ClCompile Include="src\views\ViewFinance.cpp" />
     <ClCompile Include="src\views\ViewHR.cpp" />
     <ClCompile Include="src\views\ViewManager.cpp" />
+    <ClCompile Include="src\views\ViewMainMenu.cpp" />
     <ClCompile Include="src\views\ViewQA.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,8 +207,10 @@
     <ClInclude Include="include\views\ViewExportCSV.h" />
     <ClInclude Include="include\views\ViewFinance.h" />
     <ClInclude Include="include\views\ViewHR.h" />
+    <ClInclude Include="include\views\ViewMainMenu.h" />
     <ClInclude Include="include\views\ViewManager.h" />
     <ClInclude Include="include\views\ViewQA.h" />
+    <ClInclude Include="include\views\ViewTable.h" />
     <ClInclude Include="lib\sqlite\sqlite3.h" />
     <ClInclude Include="lib\sqlite\sqlite3ext.h" />
     <ClInclude Include="Logs\FileDump.h" />

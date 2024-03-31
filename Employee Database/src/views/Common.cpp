@@ -5,19 +5,21 @@
 
 void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 	while (true) {
+		std::cout << "------------------------------------------------ " << ent << " Menu ------------------------------------------------------- \n";
+
 		std::cout << "0. Quit\n";
 		std::cout << "1. Insert\n";
 		std::cout << "2. Update\n";
 		std::cout << "3. Delete\n";
 		std::cout << "4. View\n";
 		std::cout << "5. Main Menu\n";
-		std::cout << "Please select operation which you want to perform on " << ent << ": ";
+		std::cout << "\x1B[36mPlease select operation which you want to perform on " << ent << ": \033[0m";
 
 		char input;
 		input = std::cin.get();
 		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -26,19 +28,18 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)...\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-5)...\033[0m\n";
 
-			std::cout << "Press enter to continue...\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
 		else if (EmployeeDB::Validator::validateInputMenu(input)) {
 
-			system("cls");
-
 			if (input == '0') {
 				std::exit(0);
 			}
+			system("cls");
 			if (input == '5') {
 				std::cin.clear();
 				std::cin.ignore();
@@ -61,8 +62,8 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 		else {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "Please enter valid input in the given range(0-5)\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-5)...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -78,13 +79,13 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 			cnt++;
 		}
 
-		std::cout << "Enter 0 to GO BACK or enter the ID of the " << ent << " which you want to " << op << ": ";
+		std::cout << "\x1B[36mEnter 0 to GO BACK or enter the ID of the " << ent << " which you want to " << op << ": \033[0m";
 		std::string in;
 		std::getline(std::cin, in);
 		if (in.size() == 0) {
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 
-			std::cout << "Press enter to continue...\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -92,7 +93,7 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 			try {
 				int id = std::stoi(in);
 				if (id == 0) {
-					std::cout << "Press enter to continue...\n";
+					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
 					system("cls");
 					return 0;
@@ -101,14 +102,14 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 					return id;
 				}
 				else {
-					std::cout << "No records found for the given emloyeeID...\n";
+					std::cerr << "\x1B[31mNo records found for the given emloyeeID...\033[0m\n";
 				}
 				//break;
 			}
 			catch (...) {
-				std::cerr << "Please enter a numeric value...\n";
+				std::cerr << "\x1B[31mPlease enter a numeric value...\033[0m\n";
 
-				std::cout << "Press enter to continue...\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 			}
@@ -206,7 +207,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 	if (x) {
 		char in, nxt;
 		while (true) {
-			std::cout << "Do you want to update another field?(0/1): ";
+			std::cout << "\x1B[36mDo you want to update another field?(0/1): \033[0m";
 			in = std::cin.get();
 			nxt = std::cin.peek();
 
@@ -214,7 +215,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 				in = ' ';
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cout << "Please enter valid input...\n";
+				std::cout << "\x1B[31mPlease enter valid input...\033[0m\n";
 			}
 
 			if (Validator::validateCharInput(in)) {
@@ -227,7 +228,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 				break;
 			}
 			else {
-				std::cout << "Wrong Input...\n";
+				std::cout << "\x1B[31mPlease enter valid input...\033[0m\n";
 			}
 		}
 		if (in == '0') {
@@ -246,19 +247,19 @@ bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string_view&
 		//	//Logic to send an object
 		//	DbSuccess = fun(int);
 
-		std::cout << "Are you sure you want to delete this employee(0/1): ";
+		std::cout << "\x1B[36mAre you sure you want to delete this employee(0/1): \033[0m";
 		char confirm;
 		confirm = std::cin.get();
 
 		if (confirm == '\n') {
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 		else if (std::cin.peek() != '\n') {
 			confirm = ' ';  // Validator will return false
 
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 		else if (EmployeeDB::Validator::validateCharInput(confirm)) {
 			if (confirm == '1')
@@ -274,11 +275,10 @@ bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string_view&
 					DbSuccess = EmployeeDB::Controller::EmployeeController::deleteEmployeeByID(id);
 
 				if (DbSuccess) {
-					std::cout << "Employee Deleted SuccessFull\n";
 					return true;
 				}
 				else {
-					std::cout << "Error from DB\n";
+					std::cerr << "\x1B[31mCannot delete...\033[0m\n";
 					return false;
 				}
 			}
@@ -290,7 +290,7 @@ bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string_view&
 			break;
 		}
 		else {
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 	}
 	return true;
@@ -299,18 +299,18 @@ bool EmployeeDB::Console::dltConfirmation(const int& id, const std::string_view&
 bool EmployeeDB::Console::repeatOperation(const std::string& op, const std::string& ent) {
 	while (true) {
 		char in;
-		std::cout << "Do you want to " + op + " another " + ent + "? (0/1): ";
+		std::cout << "\x1B[36mDo you want to " + op + " another " + ent + "? (0/1): \033[0m";
 		in = std::cin.get();
 
 		if (in == '\n') {
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 		else if (std::cin.peek() != '\n') {
 			in = ' ';  // Validator will return false
 
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 		else if (EmployeeDB::Validator::validateCharInput(in)) {
 			if (in == '1') {
@@ -325,7 +325,7 @@ bool EmployeeDB::Console::repeatOperation(const std::string& op, const std::stri
 		else {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 		}
 	}
 }
@@ -366,7 +366,7 @@ std::string EmployeeDB::Console::mandatoryWithValidation(const std::string& fiel
 		std::cout << fieldName << "*: ";
 		std::getline(std::cin, inputField);
 		if (inputField.size() == 0) {
-			std::cout << errMsg << '\n';
+			std::cerr << "\x1B[31m" << errMsg << "\033[0m\n";
 		}
 		else {
 			inputField = trim(inputField);
@@ -374,7 +374,7 @@ std::string EmployeeDB::Console::mandatoryWithValidation(const std::string& fiel
 				return inputField;
 			}
 			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 	}
@@ -387,7 +387,7 @@ std::string EmployeeDB::Console::mandatoryWithoutValidation(const std::string& f
 		std::getline(std::cin, inputField);
 		inputField = trim(inputField);
 		if (inputField.size() == 0) {
-			std::cout << errMsg << '\n';
+			std::cerr << "\x1B[31m" << errMsg << "\033[0m\n";
 		}
 		else {
 			return inputField;
@@ -405,14 +405,14 @@ std::string EmployeeDB::Console::nonMandatoryWithValidation(const std::string& f
 		}
 		inputField = trim(inputField);
 		if (inputField.size() == 0) {
-			std::cout << errMsg << '\n';
+			std::cerr << "\x1B[31m" << errMsg << "\033[0m\n";
 		}
 		else {
 			if (validateField(inputField)) {
 				return inputField;
 			}
 			else {
-				std::cerr << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 	}
@@ -428,7 +428,7 @@ std::string EmployeeDB::Console::nonMandatoryWithoutValidation(const std::string
 		}
 		inputField = trim(inputField);
 		if (inputField.size() == 0) {
-			std::cout << errMsg << '\n';
+			std::cerr << "\x1B[31m" << errMsg << "\033[0m\n";
 		}
 		else {
 			return inputField;
@@ -476,7 +476,7 @@ std::string EmployeeDB::Console::checkInput(const std::string& s) {
 		std::getline(std::cin, inputField);
 		inputField = trim(inputField);
 		if (inputField.size() == 0) {
-			std::cout << "The input can not be empty...Please enter something\n";
+			std::cerr << "\x1B[31mThe input can not be empty...Please enter something\033[0m\n";
 		}
 		else {
 			break;
@@ -497,7 +497,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter integer value...\n";
+				std::cerr << "\x1B[31mPlease enter integer value...\033[0m\n";
 			}
 		}
 		break;
@@ -525,7 +525,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			else {
-				std::cout << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 		break;
@@ -538,7 +538,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			else {
-				std::cout << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 		break;
@@ -551,7 +551,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			else {
-				std::cout << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 		break;
@@ -569,7 +569,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			else {
-				std::cout << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 		break;
@@ -582,7 +582,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			else {
-				std::cout << "Wrong input...Please enter again!!\n";
+				std::cerr << "\x1B[31mWrong input...Please enter again!!\033[0m\n";
 			}
 		}
 		break;
@@ -596,7 +596,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter integer value...\n";
+				std::cerr << "\x1B[31mPlease enter integer value...\033[0m\n";
 			}
 		}
 		break;
@@ -610,7 +610,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter integer value...\n";
+				std::cerr << "\x1B[31mPlease enter integer value...\033[0m\n";
 			}
 		}
 		break;
@@ -624,7 +624,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter numeric value...\n";
+				std::cerr << "\x1B[31mPlease enter numeric value...\033[0m\n";
 			}
 		}
 		break;
@@ -638,13 +638,13 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter numeric value...\n";
+				std::cerr << "Please enter numeric value...\n";
 			}
 		}
 		break;
 	}
 	default: {
-		std::cout << "Invalid input...Please enter input in correct range!!\n";
+		std::cerr << "\x1B[31mInvalid input...Please enter input in correct range!!\033[0m\n";
 	}
 	}
 }
@@ -733,7 +733,7 @@ void EmployeeDB::Console::matchInpFieldDept(const std::string& inputField, std::
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter integer value...\n";
+				std::cerr << "\x1B[31mPlease enter integer value...\033[0m\n";
 			}
 		}
 		break;
@@ -752,7 +752,7 @@ void EmployeeDB::Console::matchInpFieldDept(const std::string& inputField, std::
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter numeric value...\n";
+				std::cerr << "\x1B[31mPlease enter numeric value...\033[0m\n";
 			}
 		}
 		break;
@@ -766,7 +766,7 @@ void EmployeeDB::Console::matchInpFieldDept(const std::string& inputField, std::
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter numeric value...\n";
+				std::cerr << "\x1B[31mPlease enter numeric value...\033[0m\n";
 			}
 		}
 		break;
@@ -780,7 +780,7 @@ void EmployeeDB::Console::matchInpFieldDept(const std::string& inputField, std::
 				break;
 			}
 			catch (...) {
-				std::cout << "Please enter numeric value...\n";
+				std::cerr << "\x1B[31mPlease enter numeric value...\033[0m\n";
 			}
 		}
 		break;
@@ -798,12 +798,12 @@ bool EmployeeDB::Console::viewOperation(char& input) {
 		std::cout << "0. Back\n";
 		std::cout << "1. View whole table\n";
 		std::cout << "2. View with the help of some field of the table\n";
-		std::cout << "Enter your choice(0-2): ";
+		std::cout << "\x1B[36mEnter your choice(0-2): \033[0m";
 		input = std::cin.get();
 
 		if (input == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -811,8 +811,8 @@ bool EmployeeDB::Console::viewOperation(char& input) {
 			input = ' ';
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -829,8 +829,8 @@ bool EmployeeDB::Console::viewOperation(char& input) {
 			else {
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cerr << "Please enter valid input in the given range(0-2)\n";
-				std::cout << "Press enter to continue...\n";
+				std::cerr << "\x1B[31mPlease enter valid input in the given range(0-2)...\033[0m\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 			}
@@ -849,13 +849,13 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 			printEmpFields(empType);
 
 		char a;
-		std::cout << "Are you sure you want to continue with the insert operation(0/1): ";
+		std::cout << "\x1B[36mAre you sure you want to continue with the insert operation(0/1): \033[0m";
 		a = std::cin.get();
 
 
 		if (a == '\n') {
-			std::cout << "Please enter valid input...\n";
-			std::cout << "Press enter to continue...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -863,9 +863,9 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 			a = ' ';
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cout << "Please enter valid input...\n";
+			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 
-			std::cout << "Press enter to continue...\n";
+			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
 		}
@@ -901,8 +901,8 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 			else {
 				std::cin.clear();
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				std::cout << "Please enter valid input...\n";
-				std::cout << "Press enter to continue...\n";
+				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
+				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
 				system("cls");
 			}
