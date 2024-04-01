@@ -7,7 +7,7 @@
 namespace EmployeeDB::Controller {
 	class TableController{
 	public:
-		static bool tableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount);
+		static bool createTableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount);
 		static bool deleteTableQuery(std::string& tableName);
 	};
 }

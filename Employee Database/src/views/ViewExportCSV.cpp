@@ -18,7 +18,7 @@ void EmployeeDB::Console::ExportCSVMenu() {
 		std::cout << "6. Export HR Table\n";
 		std::cout << "7. Export Manager Table\n";
 		std::cout << "8. Export QA Table\n";
-		std::cout << "9. Main Menu\n";
+		std::cout << "9. EmployeeDB Menu\n";
 		std::cout << "\x1B[36mSelect the table which you want to export as CSV(0-9): \033[0m";
 
 		char input;

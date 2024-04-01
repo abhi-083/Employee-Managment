@@ -3,7 +3,7 @@
 #include "TableController.h"
 #include "DBManager.h"
 
-	bool EmployeeDB::Controller::TableController::tableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount){
+	bool EmployeeDB::Controller::TableController::createTableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount){
 		std::string query;
 		query = "CREATE TABLE ";
 		query += "\"";

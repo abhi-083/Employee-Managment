@@ -25,6 +25,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 		std::cout << "5. Manager\n";
 		std::cout << "6. Department\n";
 		std::cout << "7. Export Table as CSV\n";
+		std::cout << "8. Main Menu\n";
 		std::cout << "\x1B[36mPlease select entity on which you want to perform operation: \033[0m";
 
 		char input;
@@ -40,7 +41,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 			input = ' ';
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-6)...\033[0m\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-8)...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
 			system("cls");
@@ -57,7 +58,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-6)...\033[0m\n";
+			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-8)...\033[0m\n";
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();

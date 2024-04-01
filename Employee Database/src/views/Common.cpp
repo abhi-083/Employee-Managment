@@ -12,7 +12,7 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 		std::cout << "2. Update\n";
 		std::cout << "3. Delete\n";
 		std::cout << "4. View\n";
-		std::cout << "5. Main Menu\n";
+		std::cout << "5. EmployeeDB Menu\n";
 		std::cout << "\x1B[36mPlease select operation which you want to perform on " << ent << ": \033[0m";
 
 		char input;
