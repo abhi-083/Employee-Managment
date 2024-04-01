@@ -1,6 +1,6 @@
 #ifndef _viewFinance_h_
 #define _viewFinance_h_
-#include "../model/Finance.h"
+#include "Finance.h"
 
 namespace EmployeeDB::Console {
 

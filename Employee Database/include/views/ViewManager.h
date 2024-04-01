@@ -1,6 +1,6 @@
 #ifndef _viewManager_h_
 #define _viewManager_h_
-#include "../model/Manager.h"
+#include "Manager.h"
 
 namespace EmployeeDB::Console {
 

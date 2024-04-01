@@ -1,6 +1,6 @@
 #ifndef _viewDepartment_h_
 #define _viewDepartment_h_
-#include "../model/Department.h"
+#include "Department.h"
 
 namespace EmployeeDB::Console {
 

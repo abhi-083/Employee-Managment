@@ -1,6 +1,6 @@
 #ifndef _viewQA_h_
 #define _viewQA_h_
-#include "../model/QA.h"
+#include "QA.h"
 
 namespace EmployeeDB::Console {
 

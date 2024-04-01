@@ -36,6 +36,9 @@
 bin/
 bin-int/
 tablesInCSV/
+x64/
+packages/
+EmployeeDB Test/x64
 
 #others
 *.docx

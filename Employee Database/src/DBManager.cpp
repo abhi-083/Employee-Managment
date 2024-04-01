@@ -2,10 +2,10 @@
 #include <string>
 #include <iomanip>
 #include <exception>
-#include "../Config.h"
-#include "../DBManager.h"
-#include "../include/model/Salary.h"
-#include "../include/controller/EmployeeController.h"
+#include "Config.h"
+#include "DBManager.h"
+#include "Salary.h"
+#include "EmployeeController.h"
 #include "../Logs/Logger.h"
 
 using EmployeeDB::DBManager;
@@ -44,7 +44,6 @@ int DBManager::closeConnection() {
 
 int DBManager::executeQuery(const char* queryString) {
 	m_ResultCode = sqlite3_exec(m_DB, queryString, 0, 0, &m_ErrorMessage);
-
 	if (m_ResultCode == SQLITE_OK) {
 		systemLog::Info("[SUCCESS]", "Successfully executed Query ->" , queryString);
 	}
@@ -173,5 +172,16 @@ void DBManager::executeConfigQuery() {
 	catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
 		systemLog::Error("[FAIL]", e.what(), "->", queryString);
+	}
+}
+
+void DBManager::executeTruncateQuery(const char* tableName) {
+	std::string queryString = std::string{ "DELETE FROM " } + tableName + ";";
+
+	try {
+		instance().executeQuery(queryString.c_str());
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << '\n';
 	}
 }

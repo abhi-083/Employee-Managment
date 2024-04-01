@@ -1,6 +1,6 @@
 #ifndef _viewEngineer_h_
 #define _viewEngineer_h_
-#include "../model/Engineer.h"
+#include "Engineer.h"
 
 namespace EmployeeDB::Console {
 

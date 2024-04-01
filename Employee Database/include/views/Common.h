@@ -2,8 +2,8 @@
 #define __common_h_
 #include <iostream>
 #include <string>
-#include "../Validator.h"
-#include "../model/Employee.h"
+#include "Validator.h"
+#include "Employee.h"
 
 namespace EmployeeDB::Console {
 

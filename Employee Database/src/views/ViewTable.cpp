@@ -1,6 +1,6 @@
-#include "../../include/views/ViewTable.h"
-#include "../../include/model/Table.h"
-#include "../../include/controller/TableController.h"
+#include "ViewTable.h"
+#include "Table.h"
+#include "TableController.h"
 #include "Common.h"
 #include <iostream>
 
