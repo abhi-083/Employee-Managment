@@ -35,7 +35,6 @@
 .vs/
 bin/
 bin-int/
-tablesInCSV/
 x64/
 packages/
 EmployeeDB Test/x64
@@ -43,3 +42,4 @@ EmployeeDB Test/x64
 #others
 *.docx
 *.txt
+*.csv

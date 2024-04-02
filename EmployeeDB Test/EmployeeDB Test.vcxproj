@@ -33,10 +33,10 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Employee Database;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\fixtures\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)Employee Database\include\views\;$(SolutionDir)Employee Database\include\model\;$(SolutionDir)Employee Database\include\controller\;$(SolutionDir)Employee Database\include\;$(SolutionDir)Employee Database\lib\sqlite\</IncludePath>
+    <IncludePath>$(SolutionDir)Employee Database\;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\fixtures\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)Employee Database\include\views\;$(SolutionDir)Employee Database\include\model\;$(SolutionDir)Employee Database\include\controller\;$(SolutionDir)Employee Database\include\;$(SolutionDir)Employee Database\lib\sqlite\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)Employee Database;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\fixtures\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)Employee Database\include\views\;$(SolutionDir)Employee Database\include\model\;$(SolutionDir)Employee Database\include\controller\;$(SolutionDir)Employee Database\include\;$(SolutionDir)Employee Database\lib\sqlite\</IncludePath>
+    <IncludePath>$(SolutionDir)Employee Database\;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)$(ProjectName)\include\;$(SolutionDir)$(ProjectName)\include\controller\;$(SolutionDir)$(ProjectName)\include\fixtures\;$(SolutionDir)$(ProjectName)\;$(SolutionDir)Employee Database\include\views\;$(SolutionDir)Employee Database\include\model\;$(SolutionDir)Employee Database\include\controller\;$(SolutionDir)Employee Database\include\;$(SolutionDir)Employee Database\lib\sqlite\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -116,13 +116,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\controller\DepartmentControllerTest.h" />
+    <ClInclude Include="include\controller\ExportCSVControllerTest.h" />
+    <ClInclude Include="include\controller\FinanceControllerTest.h" />
+    <ClInclude Include="include\controller\HRControllerTest.h" />
+    <ClInclude Include="include\controller\ManagerControllerTest.h" />
+    <ClInclude Include="include\controller\QAControllerTest.h" />
+    <ClInclude Include="include\controller\TableControllerTest.h" />
+    <ClInclude Include="include\fixtures\DepartmentFixture.h" />
     <ClInclude Include="include\fixtures\EmployeeFixture.h" />
     <ClInclude Include="include\controller\EmployeeControllerTest.h" />
+    <ClInclude Include="include\fixtures\ExportCSVFixture.h" />
+    <ClInclude Include="include\fixtures\FinanceFixture.h" />
+    <ClInclude Include="include\fixtures\HRFIxture.h" />
+    <ClInclude Include="include\fixtures\ManagerFixture.h" />
+    <ClInclude Include="include\fixtures\QAFixture.h" />
+    <ClInclude Include="include\fixtures\SalaryFixture.h" />
+    <ClInclude Include="include\fixtures\TableFIxture.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\fixtures\EngineerFixture.h" />
+    <ClInclude Include="include\controller\EngineerControllerTest.h" />
+    <ClCompile Include="src\controller\DepartmentControllerTest.cpp" />
     <ClCompile Include="src\controller\EmployeeControllerTest.cpp" />
+    <ClCompile Include="src\controller\EngineerControllerTest.cpp" />
+    <ClCompile Include="src\controller\ExportCSVControllerTest.cpp" />
+    <ClCompile Include="src\controller\FinanceControllerTest.cpp" />
+    <ClCompile Include="src\controller\HRControllerTest.cpp" />
+    <ClCompile Include="src\controller\ManagerControllerTest.cpp" />
+    <ClCompile Include="src\controller\QAControllerTest.cpp" />
+    <ClCompile Include="src\controller\TableControllerTest.cpp" />
     <ClCompile Include="src\model\EmployeeTest.cpp" />
+    <ClCompile Include="src\model\SalaryTest.cpp" />
     <ClCompile Include="src\ValidatorTest.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">

@@ -200,7 +200,7 @@ void EmployeeDB::Console::createTable() {
 							}
 						}
 
-						bool DBSuccess = EmployeeDB::Controller::TableController::createTableQuery(t, colCount, keyCount);
+						bool DBSuccess = EmployeeDB::Controller::TableController::executeCreateQuery(t, colCount, keyCount);
 						if (DBSuccess) {
 							std::cout << '\n';
 						}

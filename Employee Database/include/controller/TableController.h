@@ -7,8 +7,10 @@
 namespace EmployeeDB::Controller {
 	class TableController{
 	public:
-		static bool createTableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount);
-		static bool deleteTableQuery(std::string& tableName);
+		static bool deleteTableQuery(const std::string& tableName);
+		static bool executeCreateQuery(EmployeeDB::Model::Table& tab, int columnCount, int keyCount);
+	protected :
+		static std::string createTableQuery(EmployeeDB::Model::Table& tab , int columnCount , int keyCount);
 	};
 }
 

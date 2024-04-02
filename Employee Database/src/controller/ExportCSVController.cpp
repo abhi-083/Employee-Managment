@@ -6,14 +6,14 @@
 #include "DBManager.h"
 #include "Config.h"
 
-using EmployeeDB::Controller::ExportController;
+using EmployeeDB::Controller::ExportCSVController;
 using EmployeeDB::DBManager;
 
-void ExportController::removeCommas(std::string& str) {
+void ExportCSVController::removeCommas(std::string& str) {
     str.erase(std::remove_if(str.begin(), str.end(), [](char c) { return c == ','; }), str.end());
 }
 
-int ExportController::exportCallback(void* arg, int argc, char** argv, char** azColName) {
+int ExportCSVController::exportCallback(void* arg, int argc, char** argv, char** azColName) {
     auto& [titlesWritten, outStream] = *(static_cast<std::tuple<bool, std::ofstream>*>(arg));
 
     if (!titlesWritten) {
@@ -39,7 +39,7 @@ int ExportController::exportCallback(void* arg, int argc, char** argv, char** az
     return 0;
 }
 
-bool ExportController::exportToCSV(const std::string& entity, std::filesystem::path filename) {
+bool ExportCSVController::exportToCSV(const std::string& entity, std::filesystem::path filename) {
     std::string queryString = "SELECT * FROM " + entity + ";";
 
     filename += ".csv";
@@ -66,7 +66,7 @@ bool ExportController::exportToCSV(const std::string& entity, std::filesystem::p
     return true;
 }
 
-bool ExportController::exportAll() {
+bool ExportCSVController::exportAll() {
     auto resultVariable{ true };
     auto count{ 0 };
 

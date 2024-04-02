@@ -3,7 +3,7 @@
 #include "Validator.h"
 
 #include <iostream>
-using EmployeeDB::Controller::ExportController;
+using EmployeeDB::Controller::ExportCSVController;
 
 
 void EmployeeDB::Console::ExportCSVMenu() {
@@ -47,28 +47,28 @@ void EmployeeDB::Console::ExportCSVMenu() {
 				std::exit(0);
 				break;
 			case '1':
-				result = ExportController::exportAll();
+				result = ExportCSVController::exportAll();
 				break;
 			case '2':
-				result = ExportController::exportToCSV("Department", "DepartmentBackup");
+				result = ExportCSVController::exportToCSV("Department", "DepartmentBackup");
 				break;
 			case '3':
-				result = ExportController::exportToCSV("Employee", "EmployeeBackup");
+				result = ExportCSVController::exportToCSV("Employee", "EmployeeBackup");
 				break;
 			case '4':
-				result = ExportController::exportToCSV("Engineer", "EngineerBackup");
+				result = ExportCSVController::exportToCSV("Engineer", "EngineerBackup");
 				break;
 			case '5':
-				result = ExportController::exportToCSV("Finance", "FinanceBackup");
+				result = ExportCSVController::exportToCSV("Finance", "FinanceBackup");
 				break;
 			case '6':
-				result = ExportController::exportToCSV("HR", "HRBackup");
+				result = ExportCSVController::exportToCSV("HR", "HRBackup");
 				break;
 			case '7':
-				result = ExportController::exportToCSV("Manager", "ManagerBackup");
+				result = ExportCSVController::exportToCSV("Manager", "ManagerBackup");
 				break;
 			case '8':
-				result = ExportController::exportToCSV("QA", "QABackup");
+				result = ExportCSVController::exportToCSV("QA", "QABackup");
 				break;
 			case '9':
 				std::cin.ignore();

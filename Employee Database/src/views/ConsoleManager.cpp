@@ -13,6 +13,8 @@
 using EmployeeDB::DBManager;
 
 void EmployeeDB::Console::viewDBMenu() noexcept {
+	std::cin.clear();
+	std::cin.ignore();
 	DBManager::executeConfigQuery();
 	system("cls");
 	while (true) {
@@ -50,6 +52,11 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 			system("cls");
 			if (input == '0') {
 				std::exit(0);
+			}
+			if (input == '8') {
+				std::cin.clear();
+				std::cin.ignore();
+				return;
 			}
 
 			viewFields(input);

@@ -6,7 +6,7 @@
 
 namespace EmployeeDB::Controller {
 
-	class ExportController {
+	class ExportCSVController {
 
 	public:
 
@@ -14,7 +14,7 @@ namespace EmployeeDB::Controller {
 
 		static bool exportAll();
 
-	private:
+	protected:
 
 		static int exportCallback(void* arg, int argc, char** argv, char** azColName);
 
