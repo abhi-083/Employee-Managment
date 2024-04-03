@@ -13,12 +13,11 @@
 using EmployeeDB::DBManager;
 
 void EmployeeDB::Console::viewDBMenu() noexcept {
-	std::cin.clear();
 	std::cin.ignore();
 	DBManager::executeConfigQuery();
 	system("cls");
 	while (true) {
-		std::cout << "----------------------------------------- Welcome to Database Managment ------------------------------------------------\n";
+		std::cout << "------------------------------------- Welcome to Employee Database Managment -------------------------------------------\n";
 		std::cout << "0. Quit\n";
 		std::cout << "1. Engineer\n";
 		std::cout << "2. Finance\n";
@@ -53,7 +52,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 			if (input == '0') {
 				std::exit(0);
 			}
-			if (input == '8') {
+			else if (input == '8') {
 				std::cin.clear();
 				std::cin.ignore();
 				return;

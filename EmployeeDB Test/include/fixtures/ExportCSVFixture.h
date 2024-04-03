@@ -3,12 +3,12 @@
 
 #include "pch.h"
 #include "DBManager.h"
+#include <filesystem>
 
 using EmployeeDB::DBManager;
 namespace fs = std::filesystem;
 
-class ExportFixture : public ::testing::Test {
-protected:
+struct ExportFixture : public ::testing::Test {
 	void SetUp() override {
 		DBManager::executeConfigQuery();
 

@@ -13,6 +13,7 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 		std::cout << "3. Delete\n";
 		std::cout << "4. View\n";
 		std::cout << "5. EmployeeDB Menu\n";
+		//std::cout << "5. Main Menu\n";
 		std::cout << "\x1B[36mPlease select operation which you want to perform on " << ent << ": \033[0m";
 
 		char input;
@@ -78,6 +79,7 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 			std::cin.ignore();
 			cnt++;
 		}
+		std::cout << "------------------------------------------------- " << op << " " << ent << " ------------------------------------------------------\n\n";
 
 		std::cout << "\x1B[36mEnter 0 to GO BACK or enter the ID of the " << ent << " which you want to " << op << ": \033[0m";
 		std::string in;
@@ -569,7 +571,7 @@ void EmployeeDB::Console::matchInpField(const std::string& inputField, std::stri
 			arg1 = "gender";
 			arg2 = checkInput(arg1);
 			std::transform(arg2.begin(), arg2.end(), arg2.begin(), ::tolower);
-			if (EmployeeDB::Validator::validateGender(arg2)) {
+			if (EmployeeDB::Validator::validateGender(arg2) != false) {
 				break;
 			}
 			else {
@@ -792,13 +794,14 @@ void EmployeeDB::Console::matchInpFieldDept(const std::string& inputField, std::
 	}
 }
 
-bool EmployeeDB::Console::viewOperation(char& input) {
+bool EmployeeDB::Console::viewOperation(char& input, const std::string_view& ent) {
 	short int cnt = 0;
 	while (true) {
 		if (cnt == 0) {
 			std::cin.ignore();
 			cnt++;
 		}
+		std::cout << "------------------------------------------------- View " << ent << " ------------------------------------------------------\n";
 		std::cout << "0. Back\n";
 		std::cout << "1. View whole table\n";
 		std::cout << "2. View with the help of some field of the table\n";
@@ -849,6 +852,7 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 			std::cin.ignore();
 			cnt++;
 		}
+		std::cout << "------------------------------------------------- Insert " << empType << " ------------------------------------------------------\n";
 		if (empType != "Manager")
 			printEmpFields(empType);
 

@@ -1,78 +1,50 @@
-#include "FinanceFixture.h"
 #include "FinanceControllerTest.h"
+#include "FinanceFixture.h"
 
-TEST_F(FinanceFixture, Test_insertFinanceSuccess) {
-	ASSERT_TRUE(FinanceController::insertFinance(*finance));
+TEST_F(FinanceFixture, Test_insertFinance) {
+	EXPECT_TRUE(FinanceController::insertFinance(*finance));
 
-	std::string_view queryString = "SELECT * FROM Finance WHERE accountingTool = \"SAP ERP\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Alan" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Employee;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	EXPECT_FALSE(FinanceController::insertFinance(*finance)); // FAIL
 }
 
-TEST_F(FinanceFixture, Test_insertFinanceFailure) {
-	emptyFinance->setEmail("sarah.wilson@example.com");
-	emptyFinance->setAccountingTool("Tally");
-	ASSERT_FALSE(FinanceController::insertFinance(*emptyFinance));
+TEST_F(FinanceFixture, Test_selectFinance) {
+	EXPECT_TRUE(FinanceController::selectFinance("accountingTool", "Tally"));
+	EXPECT_TRUE(FinanceController::selectFinance("accountingTool", "Excel"));
 
-	std::string_view queryString = "SELECT * FROM Finance";
-	ASSERT_NE(3, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Finance WHERE accountingTool = \"Tally\" COLLATE NOCASE;";
-	ASSERT_NE(2, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(FinanceFixture, Test_selectFinanceSuccess) {
-	ASSERT_TRUE(FinanceController::selectFinance("accountingTool", "Tally"));
-}
-
-TEST_F(FinanceFixture, Test_selectFinanceFailure) {
-	ASSERT_FALSE(FinanceController::selectFinance("mail", "rushi@gmail.com"));
-}
-
-TEST_F(FinanceFixture, Test_updateFinanceSuccess) {
-	emptyFinance->setEmployeeID(1);
-	emptyFinance->setFirstName("Alex");
-
-	ASSERT_TRUE(FinanceController::updateFinance(*emptyFinance));
-
-	std::string_view queryString = "SELECT * FROM Employee WHERE firstName = \"Alex\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Employee WHERE firstName = \"John\" COLLATE NOCASE;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(FinanceFixture, Test_updateFinanceFailure) {
-	emptyFinance->setEmployeeID(2);
-	emptyFinance->setMobileNo(9876543211);
-
-	ASSERT_FALSE(FinanceController::updateFinance(*emptyFinance));
+	EXPECT_FALSE(FinanceController::selectFinance("accountingTooool", "Excel")); // FAIL
 }
 
 TEST_F(FinanceFixture, Test_deleteFinanceByID) {
-	ASSERT_TRUE(FinanceController::deleteFinanceByID(2));
+	EXPECT_TRUE(FinanceController::deleteFinanceByID(1));
+	EXPECT_TRUE(FinanceController::deleteFinanceByID(2));
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE employeeID = 2;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Finance;";
-	ASSERT_EQ(1, DBManager::instance().executeSelectQuery(queryString.data()));
-
-	ASSERT_TRUE(FinanceController::deleteFinanceByID(1));
-
-	queryString = "SELECT * FROM Employee;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
+	std::string_view queryStr = R"(SELECT * FROM Finance WHERE employeeID = 1)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM Finance WHERE employeeID = 2)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
 }
 
-TEST_F(FinanceFixture, Test_getUpdateQueryConditionEmpty) {
-	ASSERT_STREQ("", FinanceControllerTest::getUpdateQueryCondition(*emptyFinance).c_str());
+TEST_F(FinanceFixture, Test_updateFinance) {
+	finance->setEmployeeID(1);
+	EXPECT_TRUE(FinanceController::updateFinance(*finance));
+
+	std::string_view queryStr = R"(SELECT * FROM Finance WHERE accountingTool = "Tally")";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM Finance WHERE accountingTool = "SAP ERP")";
+	EXPECT_EQ(1, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 1 row found
+
+	finance->setEmail("sarah.wilson@example.com");
+	EXPECT_FALSE(FinanceController::updateFinance(*finance)); // FAIL
 }
 
 TEST_F(FinanceFixture, Test_getUpdateQueryCondition) {
-	emptyFinance->setAccountingTool("Excel");
+	EXPECT_STREQ(FinanceControllerTest::getUpdateQueryCondition(*finance).c_str(), R"(accountingTool = "SAP ERP")");
 
-	ASSERT_STREQ("accountingTool = \"Excel\"", FinanceControllerTest::getUpdateQueryCondition(*emptyFinance).c_str());
-
-	emptyFinance->setMiddleName("Yadav");
-
-	ASSERT_STREQ("accountingTool = \"Excel\"", FinanceControllerTest::getUpdateQueryCondition(*emptyFinance).c_str());
+	EXPECT_STRNE(FinanceControllerTest::getUpdateQueryCondition(*finance).c_str(), R"(accountingTooool = "SAP ERP")"); // FAIL
 }

@@ -7,8 +7,8 @@ using EmployeeDB::Controller::TableController;
 
 class TableControllerTest : public TableController {
 public:
-	static std::string createTableQuery(EmployeeDB::Model::Table& table , int columnCount, int keyCount) {
-		return TableController::createTableQuery(table , columnCount , keyCount);
+	static std::string createTableQuery(EmployeeDB::Model::Table& table, int columnCount, int keyCount) {
+		return TableController::createTableQuery(table, columnCount, keyCount);
 	}
 };
 

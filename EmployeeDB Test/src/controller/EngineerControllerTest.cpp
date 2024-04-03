@@ -1,77 +1,50 @@
-#include "EngineerFixture.h"
 #include "EngineerControllerTest.h"
+#include "EngineerFixture.h"
 
-TEST_F(EngineerFixture, Test_insertEngineerSuccess) { 
-	ASSERT_TRUE(EngineerController::insertEngineer(*engineer)); 
+TEST_F(EngineerFixture, Test_insertEngineer) {
+	EXPECT_TRUE(EngineerController::insertEngineer(*engineer));
 
-	std::string_view queryString = "SELECT * FROM Engineer WHERE technology = \"React\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Alan" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	queryString = R"(SELECT * FROM Employee;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
+
+	EXPECT_FALSE(EngineerController::insertEngineer(*engineer)); // FAIL
 }
 
-TEST_F(EngineerFixture, Test_insertEngineerFailure) {
-	emptyEngineer->setEmail("david.brown@example.com");
-	emptyEngineer->setTechnology("Go");
-	ASSERT_FALSE(EngineerController::insertEngineer(*emptyEngineer));
+TEST_F(EngineerFixture, Test_selectEngineer) {
+	EXPECT_TRUE(EngineerController::selectEngineer("technology", "C++"));
+	EXPECT_TRUE(EngineerController::selectEngineer("technology", "NodeJS"));
 
-	std::string_view queryString = "SELECT * FROM Engineer";
-	ASSERT_NE(3, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Engineer WHERE technology = \"Go\" COLLATE NOCASE;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(EngineerFixture, Test_selectEngineerSuccess) {
-	ASSERT_TRUE(EngineerController::selectEngineer("firstName", "John"));
-}
-
-TEST_F(EngineerFixture, Test_selectEngineerFailure) {
-	ASSERT_FALSE(EngineerController::selectEngineer("LASSTNAME", "1"));
-}
-
-TEST_F(EngineerFixture, Test_updateEngineerSuccess) {
-	emptyEngineer->setEmployeeID(1);
-	emptyEngineer->setFirstName("Alex");
-
-	ASSERT_TRUE(EngineerController::updateEngineer(*emptyEngineer));
-
-	std::string_view queryString = "SELECT * FROM Employee WHERE firstName = \"Alex\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Employee WHERE firstName = \"John\" COLLATE NOCASE;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(EngineerFixture, Test_updateEngineerFailure) {
-	emptyEngineer->setEmployeeID(2);
-	emptyEngineer->setEmail("john.smith@example.com");
-
-	ASSERT_FALSE(EngineerController::updateEngineer(*emptyEngineer));
+	EXPECT_FALSE(EngineerController::selectEngineer("technologyy", "NodeJS")); // FAIL
 }
 
 TEST_F(EngineerFixture, Test_deleteEngineerByID) {
-	ASSERT_TRUE(EngineerController::deleteEngineerByID(1));
-	ASSERT_TRUE(EngineerController::deleteEngineerByID(2));
+	EXPECT_TRUE(EngineerController::deleteEngineerByID(1));
+	EXPECT_TRUE(EngineerController::deleteEngineerByID(2));
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE employeeID = 1;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Engineer;";
-	ASSERT_EQ(0, DBManager::instance().executeSelectQuery(queryString.data()));
-
-	queryString = "SELECT * FROM Employee;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
+	std::string_view queryStr = R"(SELECT * FROM Engineer WHERE employeeID = 1)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM Engineer WHERE employeeID = 2)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
 }
 
-TEST_F(EngineerFixture, Test_getUpdateQueryConditionEmpty) {
-	ASSERT_STREQ("", EngineerControllerTest::getUpdateQueryCondition(*emptyEngineer).c_str());
+TEST_F(EngineerFixture, Test_updateEngineer) {
+	engineer->setEmployeeID(1);
+	EXPECT_TRUE(EngineerController::updateEngineer(*engineer));
+
+	std::string_view queryStr = R"(SELECT * FROM Engineer WHERE technology = "C++")";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM Engineer WHERE technology = "Django")";
+	EXPECT_EQ(1, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 1 row found
+
+	engineer->setEmail("david.brown@example.com");
+	EXPECT_FALSE(EngineerController::updateEngineer(*engineer)); // FAIL
 }
 
 TEST_F(EngineerFixture, Test_getUpdateQueryCondition) {
-	emptyEngineer->setTechnology("c++");
+	EXPECT_STREQ(EngineerControllerTest::getUpdateQueryCondition(*engineer).c_str(), R"(technology = "Django")");
 
-	ASSERT_STREQ("technology = \"c++\"", EngineerControllerTest::getUpdateQueryCondition(*emptyEngineer).c_str());
-
-	emptyEngineer->setMiddleName("Patel");
-
-	ASSERT_STREQ("technology = \"c++\"", EngineerControllerTest::getUpdateQueryCondition(*emptyEngineer).c_str());
+	EXPECT_STRNE(EngineerControllerTest::getUpdateQueryCondition(*engineer).c_str(), R"(technology = "Djangooo")"); // FAIL
 }

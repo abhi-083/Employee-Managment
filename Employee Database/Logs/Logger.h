@@ -9,7 +9,7 @@ using systemLog::Log;
 
 namespace systemLog
 {
-	auto myLogger = std::make_shared<Log>("Abhi");
+	auto myLogger = std::make_shared<Log>("Abhi" , Log::Level::LevelDebug , "DatabaseLog.txt");
 
 	std::shared_ptr<Log> instance() {
 		return myLogger;
@@ -27,7 +27,7 @@ namespace systemLog
 				m_buffer.append(localTime()).append(" [ ").append(instance()->m_name).append(" ] ").append(stringFLevel(level)).append(" : ").append(msg).append(" ");
 				bufferAppend(args...);
 				if(count >= 5){
-					fileDump f;
+					fileDump f{m_FileName};
 					f.flush1(m_buffer);
 					m_buffer = "";
 					count = 0;

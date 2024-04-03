@@ -1,5 +1,5 @@
-#include "ViewExportCSV.h"
-#include "ExportCSVController.h"
+#include "views/ViewExportCSV.h"
+#include "controller/ExportCSVController.h"
 #include "Validator.h"
 
 #include <iostream>
@@ -8,7 +8,7 @@ using EmployeeDB::Controller::ExportCSVController;
 
 void EmployeeDB::Console::ExportCSVMenu() {
 	while (true) {
-		std::cout << "----------------------------------------- Export CSV ------------------------------------------------\n";
+		std::cout << "-------------------------------------------------- Export CSV ----------------------------------------------------------\n";
 		std::cout << "0. Quit\n";
 		std::cout << "1. Export All Tables\n";
 		std::cout << "2. Export Department Table\n";

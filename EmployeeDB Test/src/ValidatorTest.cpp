@@ -4,25 +4,25 @@
 using EmployeeDB::Validator;
 
 TEST(ValidatorTest, Test_validateName) {
-	ASSERT_TRUE(Validator::validateName("Abhi"));
-	ASSERT_TRUE(Validator::validateName("abc")); 
-	ASSERT_FALSE(Validator::validateName("Abhi PAtel"));  
-	ASSERT_FALSE(Validator::validateName("1")); 
-	ASSERT_FALSE(Validator::validateName("012")); 
-	ASSERT_FALSE(Validator::validateName("[]")); 
-	ASSERT_FALSE(Validator::validateName("@")); 
+	ASSERT_TRUE(Validator::validateName("Om"));
+	ASSERT_TRUE(Validator::validateName("abc"));
+	ASSERT_FALSE(Validator::validateName("Om Thakkar"));
+	ASSERT_FALSE(Validator::validateName("1"));
+	ASSERT_FALSE(Validator::validateName("012"));
+	ASSERT_FALSE(Validator::validateName("[]"));
+	ASSERT_FALSE(Validator::validateName("@"));
 	ASSERT_FALSE(Validator::validateName("012"));
 }
 
 TEST(TestValidator, Test_validateEmail) {
-	ASSERT_TRUE(Validator::validateEmail("Abhi.Patel@gmail.com"));
-	ASSERT_TRUE(Validator::validateEmail("Abhi.Patel@zuru.com"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.Patel@zu$ru.com"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.Patelhizu$ru.com"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.Patel@@zuru.com"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.Patel@.com"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.Patel@"));
-	ASSERT_FALSE(Validator::validateEmail("Abhi.com"));
+	ASSERT_TRUE(Validator::validateEmail("Om.Thakkar@gmail.com"));
+	ASSERT_TRUE(Validator::validateEmail("Om.Thakkar@zuru.com"));
+	ASSERT_FALSE(Validator::validateEmail("Om.Thakkar@zu$ru.com"));
+	ASSERT_FALSE(Validator::validateEmail("Om.Thakkarhizu$ru.com"));
+	ASSERT_FALSE(Validator::validateEmail("Om.Thakkar@@zuru.com"));
+	ASSERT_FALSE(Validator::validateEmail("Om.Thakkar@.com"));
+	ASSERT_FALSE(Validator::validateEmail("Om.Thakkar@"));
+	ASSERT_FALSE(Validator::validateEmail("Om.com"));
 }
 
 TEST(TestValidator, Test_validateMobile) {
@@ -57,7 +57,7 @@ TEST(TestValidator, Test_validateNum) {
 	ASSERT_TRUE(Validator::validateNum("1"));
 	ASSERT_TRUE(Validator::validateNum("8"));
 	ASSERT_TRUE(Validator::validateNum("16"));
-	ASSERT_FALSE(Validator::validateNum("Abhi"));
+	ASSERT_FALSE(Validator::validateNum("Om"));
 	ASSERT_FALSE(Validator::validateNum("@@"));
 }
 
@@ -65,7 +65,7 @@ TEST(TestValidator, Test_validateReal) {
 	ASSERT_TRUE(Validator::validateReal("1.00"));
 	ASSERT_TRUE(Validator::validateReal("8.32"));
 	ASSERT_TRUE(Validator::validateReal("16"));
-	ASSERT_FALSE(Validator::validateReal("Abhi"));
+	ASSERT_FALSE(Validator::validateReal("Om"));
 	ASSERT_FALSE(Validator::validateReal("@@"));
 }
 

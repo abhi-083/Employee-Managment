@@ -5,9 +5,11 @@
 #include "ManagerController.h"
 #include "Manager.h"
 
-class ManagerControllerTest : public EmployeeDB::Controller::ManagerController {
+using EmployeeDB::Controller::ManagerController;
+
+class ManagerControllerTest : public ManagerController {
 public:
-	static std::string getUpdateQueryCondition(EmployeeDB::Model::Manager& man) {
+	static std::string getUpdateQueryCondition(Manager& man) {
 		return ManagerController::getUpdateQueryCondition(man);
 	}
 };

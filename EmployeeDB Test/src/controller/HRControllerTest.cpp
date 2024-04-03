@@ -1,79 +1,54 @@
 #include "HRFixture.h"
 #include "HRControllerTest.h"
 
+TEST_F(HRFixture, Test_insertHR) {
+	EXPECT_TRUE(HRController::insertHR(*hr));
 
-TEST_F(HRFixture, Test_insertHRSuccess) {
-	ASSERT_TRUE(HRController::insertHR(*hr));
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE firstName = "Johnieee" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE dateOfBirth = \"15/05/1995\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	EXPECT_FALSE(HRController::insertHR(*hr)); // FAIL
+
+	queryString = R"(SELECT * FROM HR;)";
+	EXPECT_EQ(3, DBManager::instance().executeRowCountQuery(queryString.data()));
 }
 
-TEST_F(HRFixture, Test_insertHRFailure) {
-	emptyHR->setEmail("chris.martinez@example.com");
-	ASSERT_FALSE(HRController::insertHR(*emptyHR));
+TEST_F(HRFixture, Test_selectHR) {
+	EXPECT_TRUE(HRController::selectHR("hrSpecialization", "Recruitment"));
 
-	std::string_view queryString = "SELECT * FROM HR";
-	ASSERT_NE(3, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM HR WHERE hrSpecialization = \"Training and Development\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	EXPECT_FALSE(HRController::selectHR("mobilee", "6745678980")); //FAIL
 }
 
-TEST_F(HRFixture, Test_selectHRSuccess) {
-	ASSERT_TRUE(HRController::selectHR("hrSpecialization", "Recruitment"));
-}
 
-TEST_F(HRFixture, Test_selectHRFailure) {
-	ASSERT_FALSE(HRController::selectHR("mobile", "6745678980"));
-}
+TEST_F(HRFixture, Test_updateHR) {
+	hr->setEmployeeID(1);
 
-TEST_F(HRFixture, Test_updateHRSuccess) {
-	emptyHR->setEmployeeID(1);
-	emptyHR->setEmail("michael@example.com");
-	emptyHR->setHRSpecialization("Senior Executive");
+	EXPECT_TRUE(HRController::updateHR(*hr));
 
-	ASSERT_TRUE(HRController::updateHR(*emptyHR));
+	std::string_view queryString = R"(SELECT * FROM Employee WHERE email = "michael.johnson@example.com" COLLATE NOCASE;)";
+	EXPECT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data())); // 0 rows found
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE email = \"michael@example.com\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
+	queryString = R"(SELECT * FROM Employee WHERE email = "john.wan.steven234@example.com" COLLATE NOCASE;)";
+	EXPECT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data())); // 1 row found
 
-	queryString = "SELECT * FROM HR WHERE hrSpecialization = \"Senior Executive\" COLLATE NOCASE;";
-	ASSERT_EQ(1, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
+	hr->setEmail("chris.martinez@example.com");
 
-TEST_F(HRFixture, Test_updateHRFailure) {
-	emptyHR->setEmployeeID(2);
-	emptyHR->setMobileNo(4567890128);
-
-	ASSERT_FALSE(HRController::updateHR(*emptyHR));
+	EXPECT_FALSE(HRController::updateHR(*hr)); //FAIL
 }
 
 TEST_F(HRFixture, Test_deleteHRByID) {
-	ASSERT_TRUE(HRController::deleteHRByID(2));
+	EXPECT_TRUE(HRController::deleteHRByID(1));
+	EXPECT_TRUE(HRController::deleteHRByID(2));
 
-	std::string_view queryString = "SELECT * FROM Employee WHERE employeeID = 2;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-
-	queryString = "SELECT * FROM HR;";
-	ASSERT_EQ(1, DBManager::instance().executeSelectQuery(queryString.data()));
-
-	ASSERT_TRUE(HRController::deleteHRByID(1));
-
-	queryString = "SELECT * FROM Employee;";
-	ASSERT_EQ(0, DBManager::instance().executeRowCountQuery(queryString.data()));
-}
-
-TEST_F(HRFixture, Test_getUpdateQueryConditionEmpty) {
-	ASSERT_STREQ("", HRControllerTest::getUpdateQueryCondition(*emptyHR).c_str());
+	std::string_view queryStr = R"(SELECT * FROM HR WHERE employeeID = 1)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
+	queryStr = R"(SELECT * FROM HR WHERE employeeID = 2)";
+	EXPECT_EQ(0, EmployeeDB::DBManager::instance().executeRowCountQuery(queryStr.data())); // 0 rows found
 }
 
 TEST_F(HRFixture, Test_getUpdateQueryCondition) {
-	emptyHR->setHRSpecialization("Sr. HR Executive");
 
-	ASSERT_STREQ("hrSpecialization = \"Sr. HR Executive\"", HRControllerTest::getUpdateQueryCondition(*emptyHR).c_str());
+	EXPECT_STREQ(R"(hrSpecialization = "HR Executive")", HRControllerTest::getUpdateQueryCondition(*hr).c_str());
+	EXPECT_STRNE(R"(hrSpecializaon = "HR Executive")", HRControllerTest::getUpdateQueryCondition(*hr).c_str());
 
-	emptyHR->setFirstName("Himanshu");
-
-	ASSERT_STREQ("hrSpecialization = \"Sr. HR Executive\"", HRControllerTest::getUpdateQueryCondition(*emptyHR).c_str());
 }

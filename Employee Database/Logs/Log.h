@@ -25,10 +25,12 @@ namespace systemLog {
 		Log(const std::string& name = "Logger") : m_LogLevel{ LevelDebug }, m_name{ name } {
 			dumpInFile = { true };
 		}
+		Log(const std::string& name, const Level& level) : m_name{ name }, m_LogLevel{ level } {}
+		Log(const std::string& name, const Level& level, const std::string& file) : m_name{ name }, m_LogLevel{ level }, m_FileName{ file },dumpInFile{ true } {}
 
 		~Log() {
 			if (dumpInFile && count < 5) {
-				fileDump f;
+				fileDump f{m_FileName};
 				f.flush1(m_buffer);
 				m_buffer = "";
 				count = 0;
@@ -39,7 +41,7 @@ namespace systemLog {
 			m_LogLevel = level;
 		}
 
-		Level getLogLevel() {
+		Level getLogLevel() const{
 			return m_LogLevel;
 		}
 
@@ -53,6 +55,7 @@ namespace systemLog {
 		short int count{0};
 		std::string m_buffer = "";
 		bool dumpInFile = false;
+		std::string m_FileName{ "DatabaseLog.txt" };
 
 		std::string localTime() {
 			auto now = std::chrono::system_clock::now();

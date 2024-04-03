@@ -8,10 +8,11 @@
 using EmployeeDB::Model::Finance;
 using EmployeeDB::DBManager;
 
-class FinanceFixture : public ::testing::Test {
-protected:
+struct FinanceFixture : public testing::Test {
+	std::unique_ptr<Finance> finance;
 	void SetUp() override {
 		finance = std::make_unique<Finance>();
+
 		finance->setEmployeeID(32);
 		finance->setFirstName("Alan");
 		finance->setMiddleName("Alex");
@@ -28,21 +29,19 @@ protected:
 		finance->setBonus(30000);
 		finance->setAccountingTool("SAP ERP");
 
-		emptyFinance = std::make_unique<Finance>(true);
-
 		DBManager::executeConfigQuery();
 
-		std::string_view insertQuery = R"(INSERT INTO Department("departmentID", "departmentName", "baseSalary", "allowance", "deduction") VALUES (1, 'Engineer', 65000, 7000, 3000),(2, 'Finance', 65000, 6000, 2500);)";
+		std::string_view query = R"(INSERT INTO Department("departmentID", "departmentName", "baseSalary", "allowance", "deduction")VALUES (1, 'Engineer', 65000, 7000, 3000), (2, 'Finance', 65000, 6000, 2500);)";
 
-		DBManager::instance().executeQuery(insertQuery.data());
+		DBManager::instance().executeQuery(query.data());
 
-		insertQuery = R"(INSERT INTO Employee ("employeeID", "firstName", "middleName", "lastName", "dateOfBirth", "mobileNo", "email", "address", "gender", "dateOfJoining", "departmentID", "mentorID", "performanceMetric", "bonus") VALUES(1, 'Jane', 'Doe', 'Smith', '20-08-1992', 9876543211, 'jane.smith@example.com', '456 Elm St, City, Country', 'Female', '20-05-2018', 2, 1, 0.75, 400),(2, 'Sarah', 'Elizabeth', 'Wilson', '10-07-1995', 9876543212, 'sarah.wilson@example.com', '567 Elm St, City, Country', 'Female', '05-09-2023', 2, 1, 0.88, 600);)";
+		query = R"(INSERT INTO Employee ("employeeID", "firstName", "middleName", "lastName", "dateOfBirth", "mobileNo", "email","address", "gender", "dateOfJoining", "departmentID", "mentorID", "performanceMetric", "bonus") VALUES (1, 'Jane', 'Doe', 'Smith', '20-08-1992', 9876543211, 'jane.smith@example.com', '456 Elm St, City, Country', 'Female', '20-05-2018', 2, 1, 0.75, 400), (2, 'Sarah', 'Elizabeth', 'Wilson', '10-07-1995', 9876543212, 'sarah.wilson@example.com', '567 Elm St, City, Country', 'Female','05-09-2023', 2, 1, 0.88, 600);)";
 
-		DBManager::instance().executeQuery(insertQuery.data());
+		DBManager::instance().executeQuery(query.data());
 
-		insertQuery = R"(INSERT INTO Finance ("employeeID", "accountingTool") VALUES (1, 'Tally'),(2, 'Excel');)";
+		query = R"(INSERT INTO Finance ("employeeID", "accountingTool") VALUES (1, 'Tally'), (2, 'Excel');)";
 
-		DBManager::instance().executeQuery(insertQuery.data());
+		DBManager::instance().executeQuery(query.data());
 	}
 
 	void TearDown() override {
@@ -51,8 +50,6 @@ protected:
 		DBManager::instance().executeTruncateQuery("Finance");
 	}
 
-	std::unique_ptr<Finance> finance;
-	std::unique_ptr<Finance> emptyFinance;
 };
 
 #endif
