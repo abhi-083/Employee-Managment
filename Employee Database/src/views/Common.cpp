@@ -2,6 +2,8 @@
 #include "EmployeeController.h"
 #include "ManagerController.h"
 #include "DepartmentController.h"
+#include "PlatformUtils.h"
+#include <limits>
 
 void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 	while (true) {
@@ -22,7 +24,7 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.peek() != '\n') {
 			input = ' ';
@@ -33,14 +35,14 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (EmployeeDB::Validator::validateInputMenu(input)) {
 
 			if (input == '0') {
 				std::exit(0);
 			}
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 			if (input == '5') {
 				std::cin.clear();
 				std::cin.ignore();
@@ -66,7 +68,7 @@ void EmployeeDB::Console::inputForEnt(const std::string_view& ent) {
 			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-5)...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 	}
 }
@@ -89,7 +91,7 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else {
 			try {
@@ -97,7 +99,7 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 				if (id == 0) {
 					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					return 0;
 				}
 				if (EmployeeDB::Controller::EmployeeController::checkEmployeeExistence(std::to_string(id), ent)) {
@@ -113,7 +115,7 @@ int EmployeeDB::Console::inputID(const std::string_view& op, const std::string_v
 
 				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
-				system("cls");
+				EmployeeDB::Utils::clearScreen();
 			}
 		}
 	}
@@ -223,7 +225,7 @@ bool EmployeeDB::Console::repeatUpdateField(bool& x) {
 			if (Validator::validateCharInput(in)) {
 				if (in == '1')
 				{
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					std::cin.clear();
 					std::cin.ignore();
 				}
@@ -812,7 +814,7 @@ bool EmployeeDB::Console::viewOperation(char& input, const std::string_view& ent
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.get() != '\n') {
 			input = ' ';
@@ -821,7 +823,7 @@ bool EmployeeDB::Console::viewOperation(char& input, const std::string_view& ent
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else {
 			if (EmployeeDB::Validator::validateInputView(input)) {
@@ -829,7 +831,7 @@ bool EmployeeDB::Console::viewOperation(char& input, const std::string_view& ent
 					return false;
 				}
 				else if (input == '1' || input == '2') {
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					return true;
 				}
 			}
@@ -839,7 +841,7 @@ bool EmployeeDB::Console::viewOperation(char& input, const std::string_view& ent
 				std::cerr << "\x1B[31mPlease enter valid input in the given range(0-2)...\033[0m\n";
 				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
-				system("cls");
+				EmployeeDB::Utils::clearScreen();
 			}
 		}
 	}
@@ -865,7 +867,7 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.peek() != '\n') {
 			a = ' ';
@@ -875,7 +877,7 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else {
 			if (EmployeeDB::Validator::validateCharInput(a)) {
@@ -894,7 +896,7 @@ bool EmployeeDB::Console::insertOperation(char& input, const std::string_view& e
 				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
-				system("cls");
+				EmployeeDB::Utils::clearScreen();
 			}
 		}
 	}

@@ -2,7 +2,9 @@
 #include "Table.h"
 #include "TableController.h"
 #include "Common.h"
+#include "PlatformUtils.h"
 #include <iostream>
+#include <limits>
 
 void takeTableInput(std::string field, std::array<std::string, 3>& arr, int i) {
 	while (true) {
@@ -72,7 +74,7 @@ void EmployeeDB::Console::createTable() {
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.peek() != '\n') {
 			a = ' ';
@@ -82,18 +84,18 @@ void EmployeeDB::Console::createTable() {
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else {
 			if (EmployeeDB::Validator::validateCharInput(a)) {
 				if (a == '0') {
 					std::cin.clear();
 					std::cin.ignore();
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					return;
 				}
 				else {
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					std::cin.ignore();
 					Model::Table t;
 					while (true) {
@@ -209,7 +211,7 @@ void EmployeeDB::Console::createTable() {
 						else {
 							std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 							std::cin.get();
-							system("cls");
+							EmployeeDB::Utils::clearScreen();
 							return;
 						}
 
@@ -217,11 +219,11 @@ void EmployeeDB::Console::createTable() {
 						if (repeatOperation("create", "table")) {
 							std::cin.clear();
 							std::cin.ignore();
-							system("cls");
+							EmployeeDB::Utils::clearScreen();
 							continue;
 						}
 						else {
-							system("cls");
+							EmployeeDB::Utils::clearScreen();
 							return;
 						}
 					}
@@ -244,7 +246,7 @@ void EmployeeDB::Console::deleteTable() {
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else {
 			tableName = EmployeeDB::Console::trim(tableName);
@@ -252,11 +254,11 @@ void EmployeeDB::Console::deleteTable() {
 				std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 				std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 				std::cin.get();
-				system("cls");
+				EmployeeDB::Utils::clearScreen();
 			}
 			else {
 				if (tableName == "0") {
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					return;
 				}
 				else if (EmployeeDB::Validator::validateName(tableName)) {
@@ -271,7 +273,7 @@ void EmployeeDB::Console::deleteTable() {
 					else {
 						std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 						std::cin.get();
-						system("cls");
+						EmployeeDB::Utils::clearScreen();
 						return;
 						//continue;
 					}
@@ -281,18 +283,18 @@ void EmployeeDB::Console::deleteTable() {
 					std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 					std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 					std::cin.get();
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					continue;
 				}
 
 				if (repeatOperation("delete", "table")) {
 					std::cin.clear();
 					std::cin.ignore();
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					continue;
 				}
 				else {
-					system("cls");
+					EmployeeDB::Utils::clearScreen();
 					break;
 				}
 			}

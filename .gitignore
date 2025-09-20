@@ -31,7 +31,7 @@
 *.out
 *.app
 
-#folders
+# Visual Studio folders (legacy)
 .vs/
 bin/
 bin-int/
@@ -39,6 +39,55 @@ x64/
 packages/
 EmployeeDB Test/x64
 
-#others
+# CMake build directories
+build/
+*/build/
+**/build/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+!CMakePresets.json
+
+# Platform-specific build directories
+build-*/
+**/build-*/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Documentation files (optional - remove if you want to track them)
 *.docx
 *.txt
+
+# Database files (keep structure, ignore data)
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Backup files
+*.bak
+*.backup
+*~

@@ -1,8 +1,10 @@
 #include "ViewMainMenu.h"
-#include "Validator.h"
 #include "ConsoleManager.h"
 #include "ViewTable.h"
+#include "Validator.h"
+#include "PlatformUtils.h"
 #include <iostream>
+#include <limits>
 
 void EmployeeDB::Console::viewMainMenu() noexcept {
 	while (true) {
@@ -20,7 +22,7 @@ void EmployeeDB::Console::viewMainMenu() noexcept {
 			std::cerr << "\x1B[31mPlease enter valid input...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.peek() != '\n') {
 			input = ' ';
@@ -31,14 +33,14 @@ void EmployeeDB::Console::viewMainMenu() noexcept {
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (EmployeeDB::Validator::validateCreateMenu(input)) {
 
 			if (input == '0') {
 				std::exit(0);
 			}
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 			switch (input) {
 			case '1':
 				createTable();
@@ -58,7 +60,7 @@ void EmployeeDB::Console::viewMainMenu() noexcept {
 			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-5)...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 	}
 }

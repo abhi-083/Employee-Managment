@@ -8,14 +8,16 @@
 #include "ViewDepartment.h"
 #include "Validator.h"
 #include "DBManager.h"
+#include "PlatformUtils.h"
 #include<iostream>
+#include<limits>
 
 using EmployeeDB::DBManager;
 
 void EmployeeDB::Console::viewDBMenu() noexcept {
 	std::cin.ignore();
 	DBManager::executeConfigQuery();
-	system("cls");
+	EmployeeDB::Utils::clearScreen();
 	while (true) {
 		std::cout << "------------------------------------- Welcome to Employee Database Managment -------------------------------------------\n";
 		std::cout << "0. Quit\n";
@@ -36,7 +38,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (std::cin.peek() != '\n') {
 			input = ' ';
@@ -45,10 +47,10 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 			std::cerr << "\x1B[31mPlease enter valid input in the given range(0-8)...\033[0m\n";
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 		else if (EmployeeDB::Validator::validateInputMainMenu(input)) {
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 			if (input == '0') {
 				std::exit(0);
 			}
@@ -68,7 +70,7 @@ void EmployeeDB::Console::viewDBMenu() noexcept {
 
 			std::cout << "\x1B[33mPress enter to continue...\033[0m\n";
 			std::cin.get();
-			system("cls");
+			EmployeeDB::Utils::clearScreen();
 		}
 	}
 }

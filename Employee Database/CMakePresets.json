@@ -1,0 +1,233 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "windows-debug",
+            "displayName": "Windows Debug",
+            "description": "Debug build for Windows using Visual Studio",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build/windows-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/windows-debug"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release",
+            "description": "Release build for Windows using Visual Studio",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build/windows-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/windows-release"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Linux Debug",
+            "description": "Debug build for Linux using GCC",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/linux-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-debug",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "description": "Release build for Linux using GCC",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/linux-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-release",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            }
+        },
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Debug",
+            "description": "Debug build for macOS using Clang",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/macos-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/macos-debug",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Release",
+            "description": "Release build for macOS using Clang",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/macos-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/macos-release",
+                "CMAKE_CXX_COMPILER": "clang++",
+                "CMAKE_C_COMPILER": "clang"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "mingw-debug",
+            "displayName": "MinGW Debug",
+            "description": "Debug build for Windows using MinGW",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/build/mingw-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/mingw-debug",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "MinGW Release",
+            "description": "Release build for Windows using MinGW",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/build/mingw-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/mingw-release",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_C_COMPILER": "gcc"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-debug",
+            "displayName": "Windows Debug Build",
+            "configurePreset": "windows-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release Build",
+            "configurePreset": "windows-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Linux Debug Build",
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release Build",
+            "configurePreset": "linux-release"
+        },
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Debug Build",
+            "configurePreset": "macos-debug"
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Release Build",
+            "configurePreset": "macos-release"
+        },
+        {
+            "name": "mingw-debug",
+            "displayName": "MinGW Debug Build",
+            "configurePreset": "mingw-debug"
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "MinGW Release Build",
+            "configurePreset": "mingw-release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "windows-debug",
+            "displayName": "Windows Debug Tests",
+            "configurePreset": "windows-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release Tests",
+            "configurePreset": "windows-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-debug",
+            "displayName": "Linux Debug Tests",
+            "configurePreset": "linux-debug"
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release Tests",
+            "configurePreset": "linux-release"
+        },
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Debug Tests",
+            "configurePreset": "macos-debug"
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Release Tests",
+            "configurePreset": "macos-release"
+        },
+        {
+            "name": "mingw-debug",
+            "displayName": "MinGW Debug Tests",
+            "configurePreset": "mingw-debug"
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "MinGW Release Tests",
+            "configurePreset": "mingw-release"
+        }
+    ]
+}
