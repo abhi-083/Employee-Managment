@@ -4,7 +4,7 @@
 using EmployeeDB::Validator;
 
 bool Validator::validateCreateMenu(char in) noexcept {
-	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1]{1})$)"));
+	return std::regex_match(std::to_string(in), std::regex("(^(4[8|9]{1}|5[0|1|2|3]{1})$)"));
 }
 
 bool Validator::validateNum(const std::string& in) noexcept {
